@@ -57,7 +57,7 @@ Keel serves people of every faith and none. We draw on religious and secular sou
 
 **Source:** [Magnifica Humanitas](https://www.vatican.va/content/leo-xiv/en/encyclicals/documents/20260515-magnifica-humanitas.html), encyclical on human dignity in the age of AI (May 15, 2026). Paragraph numbers below are from Chapters 1–2.
 
-> ⚠️ **To do:** Chapter 4 ("Safeguarding Humanity at a Time of Transformation: Truth, Work, Freedom") covers the dignity of work and unemployment directly. Read it and add its guidance here. It is likely the most relevant section for Keel.
+Chapter 4 points below come via [Where Peter Is](https://wherepeteris.com/magnifica-humanitas-and-labor/). *To do: verify wording against the full text.*
 
 | Teaching | In Keel |
 |---|---|
@@ -69,6 +69,15 @@ Keel serves people of every faith and none. We draw on religious and secular sou
 | **Subsidiarity and local voice.** Communities, schools, religious bodies, and civil society should help shape digital tools (¶71–72). | Keel is self-hostable so a library, union, parish, school, or workforce program can run it for its own community (Manifesto #8). |
 | **Include the most vulnerable; promote digital literacy** (¶14). | Plain language, accessibility, mobile-first, no assumed tech skills (Manifesto #7). |
 | **No one is saved alone; build a culture of encounter** (¶62, ¶73). | Keel points people to real human support and, later, facilitator mode and community. |
+
+### Chapter 4: The dignity of work at a time of digital transition
+
+| Teaching | In Keel |
+|---|---|
+| **Work is more than earning a living.** It helps people grow as persons, express creativity, build relationships, contribute to their community, and mature (¶148–149). | Discover asks about all of these, not just skills. Navigate scores paths on growth, creativity, relationships, and contribution, not only pay. |
+| **AI can leave people idle, without responsibility or daily tasks, impoverishing persons and culture** (¶154). | This matches Jahoda's research almost exactly. The Rebuilding toolkit exists to restore daily structure, responsibility, and purpose during the search, so time between jobs doesn't become time without meaning. |
+| **People should be able to live with dignity through their own work** (¶149). | Keel aims for real work that fits the person, not passive dependence. The Bridge track exists so urgent needs are met without abandoning the deeper search. |
+| **Healthy life needs a balance of work, leisure, and rest; without it, families weaken and young people struggle** (¶169). | Navigate weighs hours, flexibility, and family life alongside pay. Onboarding constraints ("I care for someone," "I need flexible hours") are treated as priorities, not limitations. |
 
 ---
 
