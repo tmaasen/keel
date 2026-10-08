@@ -1,0 +1,27 @@
+{
+  "name": "keel",
+  "version": "0.1.0",
+  "private": true,
+  "description": "An open-source companion for people whose work has been changed by AI. Values first, then vocation.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "typecheck": "tsc --noEmit -p . && tsc --noEmit -p convex",
+    "convex": "convex dev"
+  },
+  "dependencies": {
+    "convex": "^1.25.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@vitejs/plugin-react": "^4.5.0",
+    "typescript": "^5.8.0",
+    "vite": "^6.3.0"
+  }
+}
