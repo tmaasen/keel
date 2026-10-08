@@ -5,6 +5,12 @@
   "description": "An open-source companion for people whose work has been changed by AI. Values first, then vocation.",
   "license": "MIT",
   "type": "module",
+  "packageManager": "pnpm@10.28.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

@@ -46,9 +46,9 @@ Keel is built around one premise: **humans first, AI second.** Read the full [Ma
 ```bash
 git clone https://github.com/<your-org>/keel.git
 cd keel
-npm install
-npx convex dev        # creates a Convex project and generates types
-npm run dev           # in a second terminal
+pnpm install
+pnpm exec convex dev  # creates a Convex project and generates types
+pnpm dev              # in a second terminal
 ```
 
 To enable AI-assisted mission drafting, set these in your Convex dashboard (Settings → Environment Variables):

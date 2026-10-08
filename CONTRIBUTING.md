@@ -19,9 +19,9 @@ Thank you for wanting to help. Keel exists for people going through one of the h
 ## Development
 
 ```bash
-npm install
-npx convex dev
-npm run dev
+pnpm install
+pnpm exec convex dev
+pnpm dev
 ```
 
-Run `npm run typecheck` before opening a PR.
+Run `pnpm typecheck` before opening a PR.
