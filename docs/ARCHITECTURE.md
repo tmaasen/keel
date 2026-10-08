@@ -35,6 +35,8 @@ The foundation uses an anonymous `sessionId` generated in the browser so the app
 - [x] Minimal web app: Ground → Discover (values) → Declare (mission draft)
 
 ### Phase 1 — Guided reflection
+- [ ] Onboarding intake for Stage 1 (spec: [ONBOARDING.md](./ONBOARDING.md))
+- [ ] Bridge track for people who need income within weeks
 - [ ] Replace sessionId with Convex Auth
 - [ ] Conversational guide using the Convex Agent component (threads per stage)
 - [ ] Values card-sort UI (accessible, mobile-first)
@@ -47,6 +49,8 @@ The foundation uses an anonymous `sessionId` generated in the browser so the app
 
 ### Phase 3 — Navigate
 - [ ] Transferable-skills inventory from work history
+- [ ] Rebuilding toolkit: restore rhythm, connection, purpose, identity, and activity during the search (see [FOUNDATIONS.md](./FOUNDATIONS.md))
+- [ ] Job crafting: reshape a current role instead of leaving it
 - [ ] Career path exploration scored against the accepted mission
 - [ ] Job search and tracking (ideas borrowed from career-ops), always draft-only
 

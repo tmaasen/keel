@@ -29,7 +29,7 @@ Stages 1–3 are the heart of Keel. Stage 4 builds on the job-search ideas prove
 
 ## Principles
 
-Keel is built around one premise: **humans first, AI second.** Read the full [Manifesto](./MANIFESTO.md).
+Keel is built around one premise: **humans first, AI second.** Read the full [Manifesto](./MANIFESTO.md) and the research behind it in [Foundations](./docs/FOUNDATIONS.md).
 
 ## Status
 
