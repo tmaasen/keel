@@ -4,6 +4,7 @@ import { internal } from "./_generated/api";
 import { GUIDE_SYSTEM_PROMPT, MISSION_DRAFT_INSTRUCTIONS } from "./guide";
 import { PROMPTS } from "./journey";
 import { ownerKey } from "./lib/owner";
+import { chat } from "./lib/llm";
 
 /** Stage 3: Declare. Versioned mission statements; exactly one may be accepted. */
 
@@ -93,7 +94,7 @@ export const resolveOwner = internalQuery({
 
 /**
  * Ask the guide for a draft. The result is saved as a *draft* the person
- * can edit or discard. Works with any OpenAI-compatible endpoint.
+ * can edit or discard. Provider config lives in convex/lib/llm.ts.
  */
 export const draftWithGuide = action({
   args: { sessionId: v.string() },
@@ -104,13 +105,6 @@ export const draftWithGuide = action({
       throw new Error("Choose at least one value before drafting a mission.");
     }
 
-    const baseUrl = process.env.LLM_BASE_URL;
-    const apiKey = process.env.LLM_API_KEY;
-    const model = process.env.LLM_MODEL;
-    if (!baseUrl || !apiKey || !model) {
-      throw new Error("AI drafting isn't configured. Set LLM_BASE_URL, LLM_API_KEY and LLM_MODEL.");
-    }
-
     const shared = [
       "My core values, most important first:",
       ...values.map((v, i) => `${i + 1}. ${v.name}${v.whyItMatters ? `: ${v.whyItMatters}` : ""}`),
@@ -119,21 +113,10 @@ export const draftWithGuide = action({
       ...reflections.map((r) => `Q: ${r.question}\nA: ${r.response}`),
     ].join("\n");
 
-    const res = await fetch(`${baseUrl.replace(/\/$/, "")}/chat/completions`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
-      body: JSON.stringify({
-        model,
-        messages: [
-          { role: "system", content: `${GUIDE_SYSTEM_PROMPT}\n\n${MISSION_DRAFT_INSTRUCTIONS}` },
-          { role: "user", content: shared },
-        ],
-      }),
-    });
-    if (!res.ok) throw new Error(`The guide couldn't draft right now (${res.status}).`);
-    const data = (await res.json()) as { choices?: { message?: { content?: string } }[] };
-    const text = data.choices?.[0]?.message?.content?.trim();
-    if (!text) throw new Error("The guide returned an empty draft.");
+    const text = await chat([
+      { role: "system", content: `${GUIDE_SYSTEM_PROMPT}\n\n${MISSION_DRAFT_INSTRUCTIONS}` },
+      { role: "user", content: shared },
+    ]);
 
     await ctx.runMutation(internal.missions.insertGuideDraft, { owner, text });
     return text;

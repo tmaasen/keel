@@ -33,31 +33,32 @@ Keel is built around one premise: **humans first, AI second.** Read the full [Ma
 
 ## Status
 
-🌱 **Foundation stage.** The data model, guide prompt, and values-discovery flow are in place. See the [roadmap](./docs/ARCHITECTURE.md#roadmap) for what's next. Contributions are very welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md).
+🌱 **Foundation stage.** The data model, guide prompt, and values-discovery flow are in place. See the [roadmap](./docs/ARCHITECTURE.md#roadmap) for what's next. Contributions are very welcome. See [Contributing](#contributing).
 
 ## Tech stack
 
 - **[Convex](https://convex.dev)**: reactive database, server functions, and (soon) the Agent component for guided conversations. Can run on Convex Cloud or be self-hosted.
 - **React + Vite + TypeScript** for the web app, so anyone can use Keel in a browser, with no terminal required.
-- **Provider-agnostic AI**: any OpenAI-compatible chat endpoint, configured with environment variables.
+- **[OpenRouter](https://openrouter.ai)** for AI by default: one key, any model, with routing restricted to providers that don't keep or train on data. Any OpenAI-compatible endpoint (including a local model) also works.
 
 ## Run it locally
 
 ```bash
-git clone https://github.com/<your-org>/keel.git
+git clone https://github.com/tmaasen/keel.git
 cd keel
 pnpm install
 pnpm exec convex dev  # creates a Convex project and generates types
 pnpm dev              # in a second terminal
 ```
 
-To enable AI-assisted mission drafting, set these in your Convex dashboard (Settings → Environment Variables):
+To enable the AI guide, set these in your Convex dashboard (Settings → Environment Variables):
 
 ```
-LLM_BASE_URL=https://api.openai.com/v1   # or any OpenAI-compatible endpoint
-LLM_API_KEY=...
-LLM_MODEL=...
+LLM_API_KEY=...     # your OpenRouter key
+LLM_MODEL=...       # any model id from openrouter.ai/models
 ```
+
+Optional: `LLM_BASE_URL` to use a different OpenAI-compatible endpoint (OpenAI, Azure, a local Ollama server), and `APP_URL` to identify your deployment to OpenRouter.
 
 ## Project layout
 
@@ -71,9 +72,31 @@ convex/
   reflections.ts     # stage 2 – Discover
   values.ts          # stage 2 – Discover
   missions.ts        # stage 3 – Declare (incl. AI draft action)
+  lib/llm.ts         # the one place Keel calls an AI model
+  lib/owner.ts       # who owns a piece of data (auth swaps in here)
 src/                 # React web app
-docs/ARCHITECTURE.md # design + roadmap
+docs/
+  ARCHITECTURE.md    # design + roadmap
+  ONBOARDING.md      # Stage 1 intake spec
+  FOUNDATIONS.md     # the research and teaching Keel is built on
 ```
+
+## Contributing
+
+Keel is for people going through one of the hardest moments of their working lives, so it needs more than code. Everyone who helps is held to one test: **does this put the human first?**
+
+**You don't need to code to help.** Some of the most valuable contributions are:
+
+- **Career counselors, coaches, and therapists:** review the reflection prompts (`convex/journey.ts`), the onboarding questions ([ONBOARDING.md](./docs/ONBOARDING.md)), and the guide's rules (`convex/guide.ts`). Tell us what's missing or could hurt.
+- **People who've lived through an AI-driven career change:** your story shapes Keel. Open an issue and tell us what would have helped.
+- **Researchers:** add findings on wellbeing, meaning, and work to [FOUNDATIONS.md](./docs/FOUNDATIONS.md), with what each one should change in Keel.
+- **Writers and translators:** make every screen plainer, warmer, and available in more languages.
+- **Designers:** accessibility, mobile, and the brand.
+- **Workforce programs, libraries, unions, and faith communities:** tell us what you'd need to run Keel for the people you serve.
+
+**Developers:** pick an item from the [roadmap](./docs/ARCHITECTURE.md#roadmap) and open an issue before starting large work. Run `pnpm typecheck` before opening a PR.
+
+Read [CONTRIBUTING.md](./CONTRIBUTING.md) for the ground rules.
 
 ## License
 
