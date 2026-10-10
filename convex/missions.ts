@@ -5,6 +5,8 @@ import { GUIDE_SYSTEM_PROMPT, MISSION_DRAFT_INSTRUCTIONS } from "./guide";
 import { PROMPTS } from "./journey";
 import { ownerKey } from "./lib/owner";
 import { chat } from "./lib/llm";
+import { consumeAiQuota } from "./lib/aiQuota";
+import { profileSummary } from "./lib/profileSummary";
 
 /** Stage 3: Declare. Versioned mission statements; exactly one may be accepted. */
 
@@ -77,7 +79,12 @@ export const contextForDraft = internalQuery({
       .query("reflections")
       .withIndex("by_owner", (q) => q.eq("owner", owner))
       .collect();
+    const profile = await ctx.db
+      .query("profiles")
+      .withIndex("by_owner", (q) => q.eq("owner", owner))
+      .unique();
     return {
+      about: profileSummary(profile),
       values: values.sort((a, b) => a.rank - b.rank),
       reflections: reflections.map((r) => ({
         question: PROMPTS.find((p) => p.id === r.promptId)?.question ?? r.promptId,
@@ -87,9 +94,24 @@ export const contextForDraft = internalQuery({
   },
 });
 
-export const resolveOwner = internalQuery({
+/**
+ * Every AI call goes through here first: the person must have turned AI on,
+ * and must be under their daily limit. Enforced on the server, not just the UI.
+ */
+export const authorizeAi = internalMutation({
   args: { sessionId: v.string() },
-  handler: async (ctx, { sessionId }) => ownerKey(ctx, sessionId),
+  handler: async (ctx, { sessionId }) => {
+    const owner = await ownerKey(ctx, sessionId);
+    const profile = await ctx.db
+      .query("profiles")
+      .withIndex("by_owner", (q) => q.eq("owner", owner))
+      .unique();
+    if (profile?.aiPreference !== "on") {
+      throw new Error("AI is turned off. You can turn it on in your settings, or keep writing on your own.");
+    }
+    await consumeAiQuota(ctx, owner);
+    return owner;
+  },
 });
 
 /**
@@ -99,13 +121,14 @@ export const resolveOwner = internalQuery({
 export const draftWithGuide = action({
   args: { sessionId: v.string() },
   handler: async (ctx, { sessionId }): Promise<string> => {
-    const owner: string = await ctx.runQuery(internal.missions.resolveOwner, { sessionId });
-    const { values, reflections } = await ctx.runQuery(internal.missions.contextForDraft, { owner });
+    const owner: string = await ctx.runMutation(internal.missions.authorizeAi, { sessionId });
+    const { about, values, reflections } = await ctx.runQuery(internal.missions.contextForDraft, { owner });
     if (values.length === 0) {
       throw new Error("Choose at least one value before drafting a mission.");
     }
 
     const shared = [
+      ...(about ? [`About me: ${about}`, ""] : []),
       "My core values, most important first:",
       ...values.map((v, i) => `${i + 1}. ${v.name}${v.whyItMatters ? `: ${v.whyItMatters}` : ""}`),
       "",

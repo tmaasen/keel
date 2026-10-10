@@ -35,13 +35,16 @@ The foundation uses an anonymous `sessionId` generated in the browser so the app
 - [x] Minimal web app: Ground → Discover (values) → Declare (mission draft)
 
 ### Phase 1 — Guided reflection
-- [ ] Onboarding intake for Stage 1 (spec: [ONBOARDING.md](./ONBOARDING.md))
-- [ ] Bridge track for people who need income within weeks
+- [x] Onboarding + triage for Stage 1 (spec: [ONBOARDING.md](./ONBOARDING.md))
+- [x] Acknowledgment step before values work
+- [x] Bridge track ("Steady ground") for people who need income soon
+- [x] AI opt-in, enforced on the server, with per-person daily limits
+- [x] Support page and in-app tester feedback
+- [ ] Tester round 1 (see [TESTING.md](./TESTING.md))
 - [ ] Replace sessionId with Convex Auth
 - [ ] Conversational guide using the Convex Agent component (threads per stage)
 - [ ] Values card-sort UI (accessible, mobile-first)
 - [ ] Export (Markdown/PDF) and delete-everything
-- [ ] Crisis/support resources page
 - [ ] AI cost guardrails: per-user rate limits, monthly spend cap, graceful "guide is resting" state (see [FUNDING.md](./FUNDING.md))
 - [ ] Donations: Open Collective + GitHub Sponsors, gentle one-time ask
 

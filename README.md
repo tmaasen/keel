@@ -33,7 +33,7 @@ Keel is built around one premise: **humans first, AI second.** Read the full [Ma
 
 ## Status
 
-🌱 **Foundation stage.** The data model, guide prompt, and values-discovery flow are in place. See the [roadmap](./docs/ARCHITECTURE.md#roadmap) for what's next. Contributions are very welcome. See [Contributing](#contributing).
+🧪 **Early testing.** Onboarding, the Steady ground (Bridge) track, values, and mission statement work end to end. See the [roadmap](./docs/ARCHITECTURE.md#roadmap) for what's next. Contributions are very welcome. See [Contributing](#contributing).
 
 ## Tech stack
 
@@ -80,6 +80,8 @@ docs/
   ONBOARDING.md      # Stage 1 intake spec
   FOUNDATIONS.md     # the research and teaching Keel is built on
   FUNDING.md         # how Keel is funded (donations) and kept free
+  USER_RESEARCH.md   # what people displaced by AI actually say
+  TESTING.md         # deploying and running a tester round
 ```
 
 ## Contributing

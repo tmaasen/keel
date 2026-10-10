@@ -1,9 +1,12 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
-import { aiImpact, stage } from "./schema";
+import { profileFields, stage } from "./schema";
 import { ownerKey } from "./lib/owner";
 
-/** Stage 1: Ground. */
+/** Stage 1: Ground (onboarding). */
+
+const MAX_TEXT = 500;
+const clean = (s: string | undefined) => (s === undefined ? undefined : s.trim().slice(0, MAX_TEXT));
 
 export const get = query({
   args: { sessionId: v.string() },
@@ -17,30 +20,48 @@ export const get = query({
 });
 
 export const upsert = mutation({
-  args: {
-    sessionId: v.string(),
-    displayName: v.optional(v.string()),
-    aiImpact: v.optional(aiImpact),
-    currentOrRecentWork: v.optional(v.string()),
-    stage: v.optional(stage),
-  },
+  args: { sessionId: v.string(), stage: v.optional(stage), ...profileFields },
   handler: async (ctx, { sessionId, ...fields }) => {
     const owner = await ownerKey(ctx, sessionId);
+    const patch = {
+      ...fields,
+      displayName: clean(fields.displayName),
+      valuedBy: clean(fields.valuedBy),
+      work: fields.work && { role: clean(fields.work.role), yearsBand: clean(fields.work.yearsBand) },
+    };
+    // Don't overwrite stored values with "undefined" from fields that weren't sent.
+    for (const key of Object.keys(patch) as (keyof typeof patch)[]) {
+      if (patch[key] === undefined) delete patch[key];
+    }
+
     const existing = await ctx.db
       .query("profiles")
       .withIndex("by_owner", (q) => q.eq("owner", owner))
       .unique();
     const updatedAt = Date.now();
     if (existing) {
-      await ctx.db.patch(existing._id, { ...fields, updatedAt });
+      await ctx.db.patch(existing._id, { ...patch, updatedAt });
       return existing._id;
     }
     return await ctx.db.insert("profiles", {
       owner,
-      ...fields,
-      stage: fields.stage ?? "ground",
+      ...patch,
+      stage: patch.stage ?? "ground",
       updatedAt,
     });
+  },
+});
+
+/** Let someone walk through onboarding again. Their answers are kept as defaults. */
+export const restartOnboarding = mutation({
+  args: { sessionId: v.string() },
+  handler: async (ctx, { sessionId }) => {
+    const owner = await ownerKey(ctx, sessionId);
+    const existing = await ctx.db
+      .query("profiles")
+      .withIndex("by_owner", (q) => q.eq("owner", owner))
+      .unique();
+    if (existing) await ctx.db.patch(existing._id, { onboardingCompletedAt: undefined, updatedAt: Date.now() });
   },
 });
 
@@ -67,6 +88,10 @@ export const exportAll = query({
         .query("missionStatements")
         .withIndex("by_owner", (q) => q.eq("owner", owner))
         .collect(),
+      feedback: await ctx.db
+        .query("feedback")
+        .withIndex("by_owner", (q) => q.eq("owner", owner))
+        .collect(),
     };
   },
 });
@@ -81,6 +106,7 @@ export const deleteEverything = mutation({
       ...(await ctx.db.query("reflections").withIndex("by_owner", (q) => q.eq("owner", owner)).collect()),
       ...(await ctx.db.query("values").withIndex("by_owner", (q) => q.eq("owner", owner)).collect()),
       ...(await ctx.db.query("missionStatements").withIndex("by_owner", (q) => q.eq("owner", owner)).collect()),
+      ...(await ctx.db.query("feedback").withIndex("by_owner", (q) => q.eq("owner", owner)).collect()),
     ];
     for (const row of rows) await ctx.db.delete(row._id);
   },
