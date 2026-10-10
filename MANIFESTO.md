@@ -28,7 +28,7 @@ Your reflections are among the most personal things you can write down. You can 
 The people most affected by AI disruption are often the least served by technical tools. Keel must be usable by anyone with a browser, in plain language, at their own pace.
 
 **8. Free and open.**
-Keel is open source so that anyone can use it, inspect it, improve it, or run it for their community: a library, a union, a workforce program, a church, a school.
+Keel is open source so that anyone can use it, inspect it, improve it, or run it for their community: a library, a union, a workforce program, a church, a school. It is funded by donations, never by ads, your data, or charging the people it serves, and every dollar is accounted for in public.
 
 ---
 

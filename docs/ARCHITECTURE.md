@@ -42,6 +42,8 @@ The foundation uses an anonymous `sessionId` generated in the browser so the app
 - [ ] Values card-sort UI (accessible, mobile-first)
 - [ ] Export (Markdown/PDF) and delete-everything
 - [ ] Crisis/support resources page
+- [ ] AI cost guardrails: per-user rate limits, monthly spend cap, graceful "guide is resting" state (see [FUNDING.md](./FUNDING.md))
+- [ ] Donations: Open Collective + GitHub Sponsors, gentle one-time ask
 
 ### Phase 2 — Mission statement
 - [ ] Iterative drafting with side-by-side versions

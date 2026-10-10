@@ -79,6 +79,7 @@ docs/
   ARCHITECTURE.md    # design + roadmap
   ONBOARDING.md      # Stage 1 intake spec
   FOUNDATIONS.md     # the research and teaching Keel is built on
+  FUNDING.md         # how Keel is funded (donations) and kept free
 ```
 
 ## Contributing
@@ -97,6 +98,10 @@ Keel is for people going through one of the hardest moments of their working liv
 **Developers:** pick an item from the [roadmap](./docs/ARCHITECTURE.md#roadmap) and open an issue before starting large work. Run `pnpm typecheck` before opening a PR.
 
 Read [CONTRIBUTING.md](./CONTRIBUTING.md) for the ground rules.
+
+## Supporting Keel
+
+Keel is free for everyone and funded entirely by donations: never ads, never your data. Every dollar in and out will be public. See [FUNDING.md](./docs/FUNDING.md).
 
 ## License
 
