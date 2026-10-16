@@ -33,6 +33,8 @@ const RESOURCES = [
     group: "People",
     items: [
       { name: "Someone you trust", detail: "A friend, family member, former coworker, or faith community. You don't have to carry this alone." },
+      { name: "Others going through it", detail: "Job clubs at libraries and American Job Centers, professional groups in your field, and mutual-aid groups. People in the same boat often help most." },
+      { name: "A union", detail: "Unions have won severance and a say in how AI is used at work. Ask coworkers, or look up the union for your field." },
       { name: "A counselor or therapist", detail: "Many offer sliding-scale fees. Your doctor or 211 can help you find one." },
     ],
   },

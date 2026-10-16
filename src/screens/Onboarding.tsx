@@ -8,6 +8,7 @@ import { SupportList } from "./Support";
 import { acknowledgment } from "../content/acknowledgment";
 import {
   AI_CHOICE,
+  AI_ROLE,
   CONSTRAINTS,
   FEELINGS,
   FIRST_NEED,
@@ -50,6 +51,7 @@ export function Onboarding({ profile, onDone }: { profile: Profile | null; onDon
   const [showSupport, setShowSupport] = useState(false);
   const step: Step = STEPS[i];
 
+  const wasHit = a.aiImpact === "lost_job" || a.aiImpact === "drying_up" || a.aiImpact === "job_changing";
   const set = (patch: Answers) => setA((prev) => ({ ...prev, ...patch }));
   const save = (patch: ProfileInput) => upsert({ sessionId, ...patch });
 
@@ -57,7 +59,7 @@ export function Onboarding({ profile, onDone }: { profile: Profile | null; onDon
   const fieldsFor = (s: Step): ProfileInput => {
     switch (s) {
       case "name": return { displayName: a.displayName ?? "" };
-      case "situation": return { aiImpact: a.aiImpact };
+      case "situation": return { aiImpact: a.aiImpact, aiRole: wasHit ? (a.aiRole ?? []) : [] };
       case "runway": return { runway: a.runway };
       case "firstNeed": return { firstNeed: a.firstNeed };
       case "work": return { work: a.work, identityTie: a.identityTie };
@@ -129,6 +131,10 @@ export function Onboarding({ profile, onDone }: { profile: Profile | null; onDon
               </p>
               <ul className="facts">
                 <li><strong>About 5 minutes.</strong> Every question can be skipped.</li>
+                <li>
+                  <strong>No predictions.</strong> Nobody knows where AI is headed, and Keel won't pretend to or sell
+                  you an "AI-proof" career.
+                </li>
                 <li><strong>Your answers are private.</strong> Not sold, not shared with employers, deletable any time.</li>
                 <li>
                   <strong>AI is optional.</strong> If you turn it on, it only reflects your own words back and offers
@@ -154,6 +160,13 @@ export function Onboarding({ profile, onDone }: { profile: Profile | null; onDon
             <Card title="What happened to your work?" why="There's more than one way this happens. Each one needs something different.">
               <SingleChoice name="situation" options={SITUATION} value={a.aiImpact}
                 onChange={(id) => set({ aiImpact: id as Profile["aiImpact"] })} />
+              {wasHit && (
+                <>
+                  <p className="field-label">What part did AI play? You don't have to know.</p>
+                  <MultiChoice options={AI_ROLE} value={a.aiRole ?? []}
+                    onChange={(ids) => set({ aiRole: ids as Profile["aiRole"] })} />
+                </>
+              )}
             </Card>
           )}
 

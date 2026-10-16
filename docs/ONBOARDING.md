@@ -21,6 +21,7 @@ The question text and answer options live in code at `src/content/onboarding.ts`
 | 1 | **Welcome + AI disclosure** | — | Research: distrust of AI is high. Say on screen one exactly what AI does and doesn't do here, and that it's optional. |
 | 2 | **What should we call you?** | `displayName` | Feels like a conversation, not a form. |
 | 3 | **What happened to your work?** Role eliminated · Work drying up · Job changed into something I don't recognize · Worried it's coming · Want more meaningful work | `aiImpact` | Freelancers have no "layoff date," and people with hollowed-out jobs aren't unemployed. Both need their own door. |
+| 3b | **What part did AI play? You don't have to know.** (only if work was hit; choose any) They said AI · I think AI was part of it · Outsourcing, cost-cutting, or restructuring · I was asked to use or train the AI tools · I honestly don't know | `aiRole` | Reddit research: many people never get a straight answer, and AI is tangled with offshoring and cost-cutting. Nobody has to prove it. "Trained the AI" unlocks an acknowledgment that adapting didn't protect them. |
 | 4 | **How long could you cover essentials without new income?** Under a month · 1–2 months · More than 2 months · I have steady income · Rather not say | `runway` | Triage. Values work before rent is handled reads as privileged. |
 | 5 | **What do you need most right now?** Income · Clarity · Rest · Not sure | `firstNeed` | Lets people tell us what comes first instead of us guessing. |
 | 6 | **Your work:** role, years, how much of who you are was tied to it | `work.role`, `work.yearsBand`, `identityTie` | Long tenure + strong identity tie = acknowledge grief more carefully. |
@@ -29,7 +30,7 @@ The question text and answer options live in code at `src/content/onboarding.ts`
 | 9 | **Who still knows your work and values it?** | `valuedBy` | Research: personal networks and callbacks helped more than job boards. Seeds the Bridge "reach back out" step. |
 | 10 | **How are you feeling about it?** Sad · Angry · Ashamed · Anxious · Numb · Relieved · Okay · *Really struggling* | **not stored** | Shapes the acknowledgment screen. "Really struggling" shows human support first. |
 | 11 | **How should Keel use AI?** Help me reflect and draft · Keep AI out of it | `aiPreference` | AI is opt-in, changeable any time, and enforced on the server. Skipping = off. |
-| 12 | **Acknowledgment** | — | Not a question. Names what happened without self-blame, validates anger if they chose it, and says their skill was real. |
+| 12 | **Acknowledgment** | — | Not a question. Names what happened without self-blame, says they don't have to prove it was AI (or that doing what was asked didn't protect them), validates anger if they chose it, says their skill was real, and says honestly that nobody knows where AI is headed. |
 | 13 | **Where to start** | `onboardingCompletedAt` | Recommends a path (below). Every path stays open. |
 
 ## Where to start (routing)
@@ -44,7 +45,7 @@ The Bridge is framed as *a bridge, not a verdict*. Discover is always one tap aw
 
 ## Language
 
-Follow the "use / avoid" list in [USER_RESEARCH.md](./USER_RESEARCH.md#language). Never say *upskill, future-proof, pivot, opportunity, disruption, reinvent yourself*.
+Follow the "use / avoid" list in [USER_RESEARCH.md](./USER_RESEARCH.md#language). Never say *upskill, future-proof, AI-proof, pivot, opportunity, disruption, reinvent yourself*, and never predict where AI is going.
 
 ## Open questions for testers
 

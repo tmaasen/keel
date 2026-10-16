@@ -18,6 +18,7 @@ import type * as lib_profileSummary from "../lib/profileSummary.js";
 import type * as missions from "../missions.js";
 import type * as profiles from "../profiles.js";
 import type * as reflections from "../reflections.js";
+import type * as skills from "../skills.js";
 import type * as values from "../values.js";
 import type * as valuesCatalog from "../valuesCatalog.js";
 
@@ -38,6 +39,7 @@ declare const fullApi: ApiFromModules<{
   missions: typeof missions;
   profiles: typeof profiles;
   reflections: typeof reflections;
+  skills: typeof skills;
   values: typeof values;
   valuesCatalog: typeof valuesCatalog;
 }>;

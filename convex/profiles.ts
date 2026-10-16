@@ -88,6 +88,10 @@ export const exportAll = query({
         .query("missionStatements")
         .withIndex("by_owner", (q) => q.eq("owner", owner))
         .collect(),
+      workTranslation: await ctx.db
+        .query("workTranslations")
+        .withIndex("by_owner", (q) => q.eq("owner", owner))
+        .unique(),
       feedback: await ctx.db
         .query("feedback")
         .withIndex("by_owner", (q) => q.eq("owner", owner))
@@ -108,6 +112,7 @@ export const deleteEverything = mutation({
       ...(await ctx.db.query("missionStatements").withIndex("by_owner", (q) => q.eq("owner", owner)).collect()),
       ...(await ctx.db.query("feedback").withIndex("by_owner", (q) => q.eq("owner", owner)).collect()),
       ...(await ctx.db.query("aiUsage").withIndex("by_owner_day", (q) => q.eq("owner", owner)).collect()),
+      ...(await ctx.db.query("workTranslations").withIndex("by_owner", (q) => q.eq("owner", owner)).collect()),
     ];
     for (const row of rows) await ctx.db.delete(row._id);
   },

@@ -17,6 +17,18 @@ export const aiImpact = v.union(
   v.literal("exploring"), // I want work that means more
 );
 
+/**
+ * What part AI played, in the person's own terms. Multi-select, and "not_sure" is a full answer.
+ * Research: many people never get a straight answer, and AI is often tangled with offshoring and cost-cutting.
+ */
+export const aiRole = v.union(
+  v.literal("told_ai"), // they said AI was the reason
+  v.literal("suspect_ai"), // nobody said it, but I think AI was part of it
+  v.literal("other_reasons"), // offshoring, cost-cutting, or restructuring was part of it
+  v.literal("trained_it"), // I was asked to use or train the AI tools
+  v.literal("not_sure"),
+);
+
 export const runway = v.union(
   v.literal("under_1m"),
   v.literal("1_2m"),
@@ -68,6 +80,7 @@ export const stage = v.union(
 export const profileFields = {
   displayName: v.optional(v.string()),
   aiImpact: v.optional(aiImpact),
+  aiRole: v.optional(v.array(aiRole)),
   runway: v.optional(runway),
   firstNeed: v.optional(firstNeed),
   work: v.optional(
@@ -120,6 +133,18 @@ export default defineSchema({
     authoredBy: v.union(v.literal("person"), v.literal("guide_draft")),
     valuesSnapshot: v.array(v.string()),
     createdAt: v.number(),
+  }).index("by_owner", ["owner"]),
+
+  /**
+   * "Translate your work": what someone did, put into words employers use.
+   * Research: the most-upvoted help on Reddit was someone doing exactly this. One per person.
+   */
+  workTranslations: defineTable({
+    owner: v.string(),
+    whatIDid: v.string(),
+    skills: v.string(),
+    skillsBy: v.union(v.literal("person"), v.literal("guide_draft")),
+    updatedAt: v.number(),
   }).index("by_owner", ["owner"]),
 
   /** Tester and user feedback. Read it in the Convex dashboard. */

@@ -4,6 +4,7 @@ import type { FeelingId } from "./onboarding";
 /**
  * The acknowledgment screen, shown before any values work.
  * Research: people describe a dignity wound first. Name it, don't rush past it.
+ * Also: many never get a straight answer about why, and many did everything asked of them.
  */
 export function acknowledgment(profile: Partial<Doc<"profiles">>, feelings: FeelingId[]): string[] {
   const lines: string[] = [];
@@ -37,6 +38,17 @@ export function acknowledgment(profile: Partial<Doc<"profiles">>, feelings: Feel
     lines.push("If this work was a big part of who you are, it makes sense that this feels bigger than a job.");
   }
 
+  const role = profile.aiRole ?? [];
+  if (role.includes("trained_it")) {
+    lines.push("You did what they asked, and it didn't protect you. That isn't a failure to adapt.");
+  }
+  const causeUnclear = role.length === 0 || role.some((r) => r === "suspect_ai" || r === "other_reasons" || r === "not_sure");
+  if (hit && causeUnclear) {
+    lines.push(
+      "You don't have to prove it was AI. Most people never get a straight answer, and it's often more than one thing.",
+    );
+  }
+
   if (feelings.includes("angry")) {
     lines.push("If you're angry, that makes sense. A lot of this came from decisions people made, not from anything you did.");
   }
@@ -47,6 +59,11 @@ export function acknowledgment(profile: Partial<Doc<"profiles">>, feelings: Feel
   if (feelings.includes("relieved")) lines.push("Relief is allowed. Sometimes an ending makes room for something better.");
 
   if (hit) lines.push("Your skill was real. Your experience still counts.");
+  if (profile.aiImpact !== "exploring") {
+    lines.push(
+      "And honestly, no one knows where AI is headed. Not the companies building it, not the experts, not us. You're not behind for not having it figured out.",
+    );
+  }
   lines.push("Let's figure out what comes next, at your pace.");
   return lines;
 }

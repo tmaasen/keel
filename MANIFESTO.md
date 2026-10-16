@@ -30,6 +30,9 @@ The people most affected by AI disruption are often the least served by technica
 **8. Free and open.**
 Keel is open source so that anyone can use it, inspect it, improve it, or run it for their community: a library, a union, a workforce program, a church, a school. It is funded by donations, never by ads, your data, or charging the people it serves, and every dollar is accounted for in public.
 
+**9. No one knows what's coming. We won't pretend to.**
+Not the companies building AI, not the experts, and not us. Keel will never sell you a forecast or an "AI-proof" career. We're all facing the same unknowns. What we can do is help you build on what goes with you: your values, your skills, and your people, and test a new path before you bet on it.
+
 ---
 
 *AI changed the weather. Your values are your keel.*

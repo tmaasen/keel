@@ -16,6 +16,14 @@ export function profileSummary(p: Doc<"profiles"> | null): string {
     exploring: "They want work that means more.",
   };
   if (p.aiImpact) parts.push(situation[p.aiImpact]);
+  const role: Record<string, string> = {
+    told_ai: "They were told AI was the reason.",
+    suspect_ai: "Nobody said so, but they think AI was part of it.",
+    other_reasons: "Outsourcing, cost-cutting, or restructuring was part of it.",
+    trained_it: "They were asked to use or train the AI tools.",
+    not_sure: "They don't know for sure what caused it.",
+  };
+  for (const r of p.aiRole ?? []) parts.push(role[r]);
   if (p.work?.role) parts.push(`Their work: ${p.work.role}${p.work.yearsBand ? ` (${p.work.yearsBand})` : ""}.`);
   if (p.identityTie === "who_i_was") parts.push("This work was a big part of who they were.");
   if (p.identityTie === "a_lot") parts.push("Much of who they are was tied to this work.");

@@ -12,6 +12,15 @@ export const SITUATION = [
   { id: "exploring", label: "I want work that means more" },
 ] as const;
 
+/** Shown with "What happened?" for people whose work was hit. Nobody has to prove it was AI. */
+export const AI_ROLE = [
+  { id: "told_ai", label: "They said AI was the reason" },
+  { id: "suspect_ai", label: "Nobody said so, but I think AI was part of it" },
+  { id: "other_reasons", label: "Outsourcing, cost-cutting, or restructuring was part of it" },
+  { id: "trained_it", label: "I was asked to use or train the AI tools" },
+  { id: "not_sure", label: "I honestly don't know" },
+] as const;
+
 export const RUNWAY = [
   { id: "under_1m", label: "Less than a month" },
   { id: "1_2m", label: "One to two months" },

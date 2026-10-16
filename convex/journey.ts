@@ -25,8 +25,8 @@ export const PROMPTS: ReflectionPrompt[] = [
   {
     id: "ground.what_changed",
     stage: "ground",
-    question: "What has changed in your work because of AI?",
-    helper: "There's no wrong answer. A sentence or two is plenty.",
+    question: "What has changed in your work?",
+    helper: "AI, cost-cutting, something you can't quite name. There's no wrong answer. A sentence or two is plenty.",
   },
   {
     id: "ground.how_it_feels",

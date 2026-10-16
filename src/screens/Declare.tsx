@@ -3,6 +3,7 @@ import { useAction, useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import type { Doc } from "../../convex/_generated/dataModel";
 import { sessionId } from "../session";
+import { humanError } from "../errors";
 
 /** Stage 3: Declare. A personal mission statement, written by the person, optionally drafted with AI. */
 export function Declare({ profile }: { profile: Doc<"profiles"> | null }) {
@@ -25,9 +26,7 @@ export function Declare({ profile }: { profile: Doc<"profiles"> | null }) {
     try {
       setText(await draftWithGuide({ sessionId }));
     } catch (e) {
-      // Convex wraps server errors; show only the human-readable part.
-      const msg = e instanceof Error ? e.message : "";
-      setError(msg.split("Uncaught Error: ").pop()?.split("\n")[0] || "Something went wrong. Try again in a moment.");
+      setError(humanError(e));
     } finally {
       setBusy(false);
     }

@@ -1,5 +1,6 @@
 import type { Doc } from "../../convex/_generated/dataModel";
 import type { View } from "../App";
+import { TranslateWork } from "../components/TranslateWork";
 
 /**
  * Bridge track: steady ground for people who need income soon.
@@ -63,12 +64,39 @@ export function Bridge({ profile, goTo }: { profile: Doc<"profiles"> | null; goT
           Hey [name], it's been a while. I'm looking for my next thing and thought of you. Would you be up for a quick
           call sometime? I'd love to hear how things are going for you, too.
         </Script>
+        <Script title="To someone doing work you're curious about">
+          Hi [name], I came across your work at [organization] and I'm exploring [kind of work]. Would you be open to a
+          15-minute call about how you got into it and what the work is really like? No pressure either way.
+        </Script>
+        <p className="helper">
+          Ask people about their work rather than asking them for a job. It's easier to say yes to, and it's how many
+          people in our research actually found their next role.
+        </p>
         <p className="helper">
           <strong>If you're asked back as a contractor:</strong> what you know about how things really work there has
           value. Contract work doesn't come with benefits, paid time off, or job security, so a common rule of thumb is
           to charge well above your old hourly pay.
         </p>
       </Block>
+
+      <Block title="Put your experience into words">
+        <TranslateWork profile={profile} />
+      </Block>
+
+      {freelancer && (
+        <Block title="Finding clients off the platforms">
+          <p>
+            Freelancers in our research described platforms burying them despite years of five-star work. What helped
+            was owning the relationship directly.
+          </p>
+          <ul className="checklist">
+            <li><strong>Go back to past clients first,</strong> by email, not through the platform. They already trust your work.</li>
+            <li><strong>Pick a niche you know</strong> and reach out to a few businesses in it directly, with a short example of what you'd do for them.</li>
+            <li><strong>Keep a simple portfolio</strong> you control. For creative work, it speaks louder than a résumé.</li>
+            <li><strong>Price for the work, not the platform.</strong> Direct clients often pay more than platform rates.</li>
+          </ul>
+        </Block>
+      )}
 
       <Block title="Bridge income">
         <p>
@@ -88,22 +116,36 @@ export function Bridge({ profile, goTo }: { profile: Doc<"profiles"> | null; goT
       <Block title="Keep your footing">
         <ul className="checklist">
           <li><strong>Keep a daily rhythm.</strong> A job gives structure without our noticing. Keep a wake-up time and a few anchors in your day.</li>
-          <li><strong>Cap the search.</strong> A few focused hours on a few days a week beats all day, every day.</li>
+          <li><strong>Cap the search.</strong> A few focused hours on a few days a week beats all day, every day. Some people apply every other day just to keep from burning out, and that's sensible.</li>
+          <li><strong>Favor people over portals.</strong> Hundreds of cold applications wear you down. A handful of warm conversations usually go further.</li>
           <li><strong>See people.</strong> Plan at least one thing a week with other people: a friend, a job club at the library, a volunteer shift.</li>
           <li><strong>Do one useful thing a day,</strong> even something small. Being useful matters as much as being paid.</li>
         </ul>
       </Block>
 
+      <Block title="Explaining it to the people around you">
+        <p>
+          Family and friends often mean well and still say things like "just get a job in AI." It can help to tell them
+          what's actually going on, and what would help.
+        </p>
+        <Script title="To family or friends">
+          The job market right now isn't what it was. A lot of experienced people are applying to hundreds of jobs and
+          hearing nothing back, and it isn't about effort. What would help me most is [encouragement / introductions to
+          people you know / not asking about it every day]. I'll tell you when there's news.
+        </Script>
+      </Block>
+
       <Block title="Before you invest in a new path">
         <p>
-          Some people in our research retrained into something AI then hit too. Before you spend months or savings on a
-          new direction, ask:
+          No one can tell you which jobs AI won't touch, including us. Some people in our research retrained into
+          something AI then hit too. So instead of looking for a safe bet, test before you spend months or savings:
         </p>
         <ul className="checklist">
           <li>Are employers actually hiring people with this training near me?</li>
           <li>How long and how much does it cost? Can I earn while I train?</li>
           <li>Does it rely on judgment, physical presence, trust, or accountability that people still want from a person?</li>
           <li>Have I talked to two people who do this work today?</li>
+          <li>Can I try it small first, like a weekend, a short course, or shadowing someone, before committing?</li>
         </ul>
       </Block>
 

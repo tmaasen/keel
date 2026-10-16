@@ -7,7 +7,7 @@ type Export = FunctionReturnType<typeof api.profiles.exportAll>;
 
 /** Everything someone wrote in Keel, as a Markdown file they can keep, print, or paste anywhere. */
 export function toMarkdown(data: Export): string {
-  const { profile, reflections, values, missionStatements } = data;
+  const { profile, reflections, values, missionStatements, workTranslation } = data;
   const date = new Date(data.exportedAt).toLocaleDateString(undefined, { dateStyle: "long" });
   const out: string[] = [`# ${profile?.displayName ? `${profile.displayName}'s` : "My"} Keel`, "", `*Saved ${date}*`, ""];
 
@@ -28,6 +28,12 @@ export function toMarkdown(data: Export): string {
     if (situation) out.push(`- ${situation}`);
     if (profile?.work?.role) out.push(`- My work: ${profile.work.role}${profile.work.yearsBand ? ` (${profile.work.yearsBand})` : ""}`);
     out.push("");
+  }
+
+  if (workTranslation && (workTranslation.whatIDid || workTranslation.skills)) {
+    out.push("## My work, in words employers use", "");
+    if (workTranslation.whatIDid) out.push("### What I did", "", workTranslation.whatIDid, "");
+    if (workTranslation.skills) out.push("### Skills", "", workTranslation.skills, "");
   }
 
   const answered = reflections.filter((r) => r.response.trim());
