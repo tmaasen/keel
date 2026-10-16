@@ -5,7 +5,7 @@ import { GUIDE_SYSTEM_PROMPT, MISSION_DRAFT_INSTRUCTIONS } from "./guide";
 import { PROMPTS } from "./journey";
 import { ownerKey } from "./lib/owner";
 import { chat } from "./lib/llm";
-import { consumeAiQuota } from "./lib/aiQuota";
+import { aiRestingMessage, consumeAiQuota, recordAiSpend } from "./lib/aiQuota";
 import { profileSummary } from "./lib/profileSummary";
 
 /** Stage 3: Declare. Versioned mission statements; exactly one may be accepted. */
@@ -94,6 +94,15 @@ export const contextForDraft = internalQuery({
   },
 });
 
+/** Whether the guide can help right now, so the UI can say so before anyone asks. */
+export const aiStatus = query({
+  args: { sessionId: v.string() },
+  handler: async (ctx, { sessionId }) => {
+    const owner = await ownerKey(ctx, sessionId);
+    return { resting: await aiRestingMessage(ctx, owner) };
+  },
+});
+
 /**
  * Every AI call goes through here first: the person must have turned AI on,
  * and must be under their daily limit. Enforced on the server, not just the UI.
@@ -136,19 +145,20 @@ export const draftWithGuide = action({
       ...reflections.map((r) => `Q: ${r.question}\nA: ${r.response}`),
     ].join("\n");
 
-    const text = await chat([
+    const { text, costUsd } = await chat([
       { role: "system", content: `${GUIDE_SYSTEM_PROMPT}\n\n${MISSION_DRAFT_INSTRUCTIONS}` },
       { role: "user", content: shared },
     ]);
 
-    await ctx.runMutation(internal.missions.insertGuideDraft, { owner, text });
+    await ctx.runMutation(internal.missions.insertGuideDraft, { owner, text, costUsd });
     return text;
   },
 });
 
 export const insertGuideDraft = internalMutation({
-  args: { owner: v.string(), text: v.string() },
-  handler: async (ctx, { owner, text }) => {
+  args: { owner: v.string(), text: v.string(), costUsd: v.number() },
+  handler: async (ctx, { owner, text, costUsd }) => {
+    await recordAiSpend(ctx, costUsd);
     const existing = await ctx.db
       .query("missionStatements")
       .withIndex("by_owner", (q) => q.eq("owner", owner))

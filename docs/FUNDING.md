@@ -69,9 +69,9 @@ Libraries, workforce boards, unions, churches, and schools that run Keel for the
 
 - [ ] Apply to Open Source Collective as fiscal host
 - [ ] Set up GitHub Sponsors and add `.github/FUNDING.yml`
-- [ ] Set a monthly spend cap in OpenRouter
-- [ ] Add per-user AI rate limits (Convex rate-limiter)
+- [x] Monthly spend cap (`AI_MONTHLY_BUDGET_USD`), with an OpenRouter key limit as backstop
+- [x] Per-person daily AI limit (`AI_DAILY_LIMIT`)
 - [ ] "Support Keel" link in footer + About page
 - [ ] One-time ask after mission acceptance (respecting the rules above)
-- [ ] Graceful "guide is resting" state when the AI budget is spent
+- [x] Graceful "guide is resting" state when the AI budget is spent
 - [ ] Publish a monthly cost update on Open Collective

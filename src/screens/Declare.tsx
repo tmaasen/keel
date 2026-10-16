@@ -11,10 +11,12 @@ export function Declare({ profile }: { profile: Doc<"profiles"> | null }) {
   const saveDraft = useMutation(api.missions.saveDraft);
   const accept = useMutation(api.missions.accept);
   const draftWithGuide = useAction(api.missions.draftWithGuide);
+  const aiStatus = useQuery(api.missions.aiStatus, { sessionId });
   const [text, setText] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const aiOn = profile?.aiPreference === "on";
+  const resting = aiStatus?.resting;
   const justAJob = profile?.workOrientation === "job";
 
   const askGuide = async () => {
@@ -55,7 +57,7 @@ export function Declare({ profile }: { profile: Doc<"profiles"> | null }) {
         <button className="primary" disabled={!text.trim()} onClick={() => { void saveDraft({ sessionId, text, authoredBy: "person" }); }}>
           Save this version
         </button>
-        {aiOn && (
+        {aiOn && !resting && (
           <button onClick={askGuide} disabled={busy || !values?.length}>
             {busy ? "Drafting…" : "Ask for a first draft"}
           </button>
@@ -64,6 +66,7 @@ export function Declare({ profile }: { profile: Doc<"profiles"> | null }) {
       {!aiOn && (
         <p className="helper">AI is off, so this is all you. You can turn AI on in "Where you are" if you'd like a first draft.</p>
       )}
+      {aiOn && resting && <p className="helper">{resting}</p>}
       {error && <p className="error" role="alert">{error}</p>}
 
       {missions && missions.length > 0 && (

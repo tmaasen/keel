@@ -8,6 +8,7 @@ import { Bridge } from "./screens/Bridge";
 import { Discover } from "./screens/Discover";
 import { Declare } from "./screens/Declare";
 import { Support } from "./screens/Support";
+import { toMarkdown } from "./exportMarkdown";
 import { Feedback } from "./components/Feedback";
 
 export type View = "ground" | "bridge" | "discover" | "declare" | "support";
@@ -106,12 +107,15 @@ function Footer({ onFeedback }: { onFeedback: () => void }) {
   const data = useQuery(api.profiles.exportAll, { sessionId });
   const deleteEverything = useMutation(api.profiles.deleteEverything);
 
-  const download = () => {
+  const download = (format: "md" | "json") => {
     if (!data) return;
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const blob =
+      format === "md"
+        ? new Blob([toMarkdown(data)], { type: "text/markdown" })
+        : new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "keel-export.json";
+    a.download = `keel.${format}`;
     a.click();
     URL.revokeObjectURL(a.href);
   };
@@ -124,7 +128,8 @@ function Footer({ onFeedback }: { onFeedback: () => void }) {
       </p>
       <div className="row">
         <button className="link" onClick={onFeedback}>Share feedback</button>
-        <button className="link" onClick={download} disabled={!data}>Download my data</button>
+        <button className="link" onClick={() => download("md")} disabled={!data}>Save what I wrote</button>
+        <button className="link" onClick={() => download("json")} disabled={!data}>Download all data (JSON)</button>
         <button
           className="link danger"
           onClick={() => {

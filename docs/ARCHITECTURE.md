@@ -44,8 +44,8 @@ The foundation uses an anonymous `sessionId` generated in the browser so the app
 - [ ] Replace sessionId with Convex Auth
 - [ ] Conversational guide using the Convex Agent component (threads per stage)
 - [ ] Values card-sort UI (accessible, mobile-first)
-- [ ] Export (Markdown/PDF) and delete-everything
-- [ ] AI cost guardrails: per-user rate limits, monthly spend cap, graceful "guide is resting" state (see [FUNDING.md](./FUNDING.md))
+- [x] Export (Markdown + JSON) and delete-everything
+- [x] AI cost guardrails: per-user daily limit, monthly spend cap, graceful "guide is resting" state (see [FUNDING.md](./FUNDING.md))
 - [ ] Donations: Open Collective + GitHub Sponsors, gentle one-time ask
 
 ### Phase 2 — Mission statement

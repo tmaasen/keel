@@ -17,6 +17,7 @@ In the Convex dashboard for the **production** deployment, set (Settings → Env
 | `LLM_API_KEY` | your OpenRouter key |
 | `LLM_MODEL` | any model id from openrouter.ai/models |
 | `AI_DAILY_LIMIT` | optional, defaults to 10 AI drafts per person per day |
+| `AI_MONTHLY_BUDGET_USD` | optional, total AI spend across everyone per month (e.g. `20`). When it's reached, the guide shows a "resting until next month" message and everything else keeps working |
 | `APP_URL` | your site URL (optional) |
 
 **Frontend (Vercel, Netlify, or similar)**
@@ -25,7 +26,7 @@ In the Convex dashboard for the **production** deployment, set (Settings → Env
 - Output directory: `dist`
 - Environment variable: `CONVEX_DEPLOY_KEY` (Convex dashboard → Settings → Deploy keys → production)
 
-**Budget safety:** set a monthly credit limit on your OpenRouter key before sharing the link.
+**Budget safety:** set `AI_MONTHLY_BUDGET_USD` and also a credit limit on your OpenRouter key before sharing the link. Keel's cap uses the cost OpenRouter reports for each call; the key limit is the backstop. If the key runs out, Keel shows the same resting message.
 
 ## 2. Check it yourself first
 
@@ -36,6 +37,7 @@ On your phone, go through the whole flow at least twice:
 - [ ] AI **off** → no draft button on Your mission; the server refuses AI calls
 - [ ] AI **on** → "Ask for a first draft" works after choosing values
 - [ ] Share feedback → a row appears in Convex dashboard → Data → `feedback`
+- [ ] Save what I wrote → a readable `keel.md` downloads with your mission, values, and reflections
 - [ ] Delete everything → you're back at the welcome screen
 
 ## 3. Recruit

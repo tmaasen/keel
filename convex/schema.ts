@@ -140,4 +140,11 @@ export default defineSchema({
     day: v.string(), // YYYY-MM-DD (UTC)
     count: v.number(),
   }).index("by_owner_day", ["owner", "day"]),
+
+  /** Total AI spend across everyone, per month. Not tied to any person. */
+  aiSpend: defineTable({
+    month: v.string(), // YYYY-MM (UTC)
+    usd: v.number(),
+    calls: v.number(),
+  }).index("by_month", ["month"]),
 });

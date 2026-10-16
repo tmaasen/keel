@@ -10,7 +10,13 @@
  *   LLM_MODEL     required, any model id from https://openrouter.ai/models
  *   LLM_BASE_URL  optional, defaults to OpenRouter
  *   APP_URL       optional, sent to OpenRouter to identify the app
+ *
+ * OpenRouter reports the dollar cost of each call, which feeds the monthly
+ * budget in convex/lib/aiQuota.ts. Other endpoints report no cost, so set a
+ * spend limit with that provider instead.
  */
+
+import { RESTING_THIS_MONTH } from "./aiQuota";
 
 const OPENROUTER_URL = "https://openrouter.ai/api/v1";
 
@@ -19,7 +25,13 @@ export interface ChatMessage {
   content: string;
 }
 
-export async function chat(messages: ChatMessage[]): Promise<string> {
+export interface ChatResult {
+  text: string;
+  /** Dollars charged for this call, when the endpoint reports it (OpenRouter does). */
+  costUsd: number;
+}
+
+export async function chat(messages: ChatMessage[]): Promise<ChatResult> {
   const baseUrl = (process.env.LLM_BASE_URL || OPENROUTER_URL).replace(/\/$/, "");
   const apiKey = process.env.LLM_API_KEY;
   const model = process.env.LLM_MODEL;
@@ -46,10 +58,15 @@ export async function chat(messages: ChatMessage[]): Promise<string> {
     headers,
     body: JSON.stringify(body),
   });
+  // 402: the key's credit limit is used up, so the monthly budget is spent.
+  if (res.status === 402) throw new Error(RESTING_THIS_MONTH);
   if (!res.ok) throw new Error(`The guide couldn't respond right now (${res.status}).`);
 
-  const data = (await res.json()) as { choices?: { message?: { content?: string } }[] };
+  const data = (await res.json()) as {
+    choices?: { message?: { content?: string } }[];
+    usage?: { cost?: number };
+  };
   const text = data.choices?.[0]?.message?.content?.trim();
   if (!text) throw new Error("The guide returned an empty response.");
-  return text;
+  return { text, costUsd: data.usage?.cost ?? 0 };
 }
