@@ -15,10 +15,12 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "typecheck": "tsc --noEmit -p . && tsc --noEmit -p convex",
-    "convex": "convex dev"
+    "convex": "convex dev",
+    "deploy": "static-hosting deploy --build-command 'pnpm build'"
   },
   "dependencies": {
-    "convex": "^1.25.0",
+    "@convex-dev/static-hosting": "0.2.1",
+    "convex": "^1.46.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },

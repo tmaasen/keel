@@ -4,27 +4,44 @@ Goal: put Keel in front of 10–15 people affected by AI and learn whether the o
 
 ## 1. Deploy
 
-**Convex (backend)**
+Keel runs entirely on Convex: the backend and the web app. The site is served by the
+[`@convex-dev/static-hosting`](https://www.npmjs.com/package/@convex-dev/static-hosting) component
+at `https://<production-deployment>.convex.site`, so there's no Vercel or Netlify to set up. It works
+on the Convex free plan.
+
+**First time only**
 
 ```bash
-pnpm exec convex deploy        # creates/updates your production deployment
+pnpm exec convex login                  # if you aren't logged in
+pnpm exec convex deploy                 # creates the production deployment
 ```
 
-In the Convex dashboard for the **production** deployment, set (Settings → Environment Variables):
+Production has its own settings; nothing carries over from dev. Set them from the terminal
+(`--prod` targets production) or in the dashboard for the **production** deployment:
+
+```bash
+pnpm exec convex env set --prod LLM_API_KEY <your OpenRouter key>
+pnpm exec convex env set --prod LLM_MODEL z-ai/glm-5.3-flash
+pnpm exec convex env set --prod AI_MONTHLY_BUDGET_USD 10
+pnpm exec convex env set --prod APP_URL https://<production-deployment>.convex.site
+```
 
 | Variable | Value |
 |---|---|
 | `LLM_API_KEY` | your OpenRouter key |
 | `LLM_MODEL` | any model id from openrouter.ai/models |
 | `AI_DAILY_LIMIT` | optional, defaults to 10 AI drafts per person per day |
-| `AI_MONTHLY_BUDGET_USD` | optional, total AI spend across everyone per month (e.g. `20`). When it's reached, the guide shows a "resting until next month" message and everything else keeps working |
-| `APP_URL` | your site URL (optional) |
+| `AI_MONTHLY_BUDGET_USD` | optional, total AI spend across everyone per month (e.g. `10`). When it's reached, the guide shows a "resting until next month" message and everything else keeps working |
+| `APP_URL` | your site URL (optional, identifies Keel to OpenRouter) |
 
-**Frontend (Vercel, Netlify, or similar)**
+**Every deploy**
 
-- Build command: `npx convex deploy --cmd 'pnpm build'`
-- Output directory: `dist`
-- Environment variable: `CONVEX_DEPLOY_KEY` (Convex dashboard → Settings → Deploy keys → production)
+```bash
+pnpm run deploy
+```
+
+This builds the web app against production, deploys the Convex backend, and uploads the site, in
+that order, so the two never drift apart. Old files are cleaned up automatically.
 
 **Budget safety:** set `AI_MONTHLY_BUDGET_USD` and also a credit limit on your OpenRouter key before sharing the link. Keel's cap uses the cost OpenRouter reports for each call; the key limit is the backstop. If the key runs out, Keel shows the same resting message.
 

@@ -44,7 +44,7 @@ Keel is built around one premise: **humans first, AI second.** Read the full [Ma
 
 ## Tech stack
 
-- **[Convex](https://convex.dev)**: reactive database, server functions, and (soon) the Agent component for guided conversations. Can run on Convex Cloud or be self-hosted.
+- **[Convex](https://convex.dev)**: reactive database, server functions, and web hosting (via the static-hosting component), so the whole app deploys with one command. Can run on Convex Cloud or be self-hosted.
 - **React + Vite + TypeScript** for the web app, so anyone can use Keel in a browser, with no terminal required.
 - **[OpenRouter](https://openrouter.ai)** for AI by default: one key, any model, with routing restricted to providers that don't keep or train on data. Any OpenAI-compatible endpoint (including a local model) also works.
 
@@ -66,6 +66,8 @@ LLM_MODEL=...       # any model id from openrouter.ai/models
 ```
 
 Optional: `LLM_BASE_URL` to use a different OpenAI-compatible endpoint (OpenAI, Azure, a local Ollama server), and `APP_URL` to identify your deployment to OpenRouter.
+
+To deploy it, see [docs/TESTING.md](./docs/TESTING.md#1-deploy): `pnpm run deploy` builds the site, deploys the backend, and publishes both on Convex.
 
 ## Project layout
 
