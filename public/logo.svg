@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -110 1120 1120" role="img" aria-label="Keel">
+<title>Keel</title><style>.s{fill:#f0b23e}.h{fill:#2e6f86}.d{fill:#1d4e5f}@media (prefers-color-scheme:dark){.s{fill:#f4bf55}.h{fill:#5a9db3}.d{fill:#8cc3d3}}</style>
+<defs><clipPath id="k-sun"><path d="M0 0 H1120 V262 L1035 284 Q560 364 90 382 L0 384 Z"/></clipPath><clipPath id="k-trim"><rect x="70" y="0" width="990" height="900"/></clipPath></defs>
+<g class="s" transform="translate(0 0)"><circle cx="545" cy="318" r="272" clip-path="url(#k-sun)"/></g><g class="h"><path d="M90 410 Q560 392 1035 312 L902 504 C800 512 700 486 560 480 C420 474 260 494 152 494 Z"/></g><g class="d" transform="translate(0 0)"><path d="M18 552 C150 516 300 498 460 500 C620 502 760 528 905 530 C980 531 1040 520 1098 498 C1040 546 910 572 790 592 C700 606 630 616 565 616 C420 616 290 556 18 552 Z"/><path d="M506 600 C486 690 474 780 478 846 C480 876 500 880 511 860 C560 770 612 672 660 590 Z"/></g>
+</svg>

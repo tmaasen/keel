@@ -117,7 +117,8 @@ a, a.link { color: var(--accent); }
   background: var(--accent-soft); border-radius: var(--radius); padding: 10px 14px; font-size: .9rem; margin-bottom: 20px;
 }
 .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.brand { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 1.3rem; color: var(--warm); letter-spacing: .02em; }
+.brand { display: inline-flex; align-items: center; gap: 8px; font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 1.3rem; color: var(--warm); letter-spacing: .02em; }
+.brand-mark { display: block; width: 40px; height: 40px; }
 
 /* Onboarding */
 .onboarding { margin-top: 16px; }

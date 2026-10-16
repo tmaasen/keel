@@ -53,7 +53,10 @@ export default function App() {
       <TesterBanner onFeedback={() => setFeedbackOpen(true)} />
 
       <header className="topbar">
-        <span className="brand">Keel</span>
+        <span className="brand">
+          <img className="brand-mark" src="/favicon.svg" alt="" width="40" height="40" />
+          Keel
+        </span>
         <button className="link" onClick={() => goTo("support")}>Talk to a person</button>
       </header>
 

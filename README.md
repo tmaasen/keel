@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/brand/logo-dark.png" />
+    <img src="docs/brand/logo.png" alt="Keel logo: a sun over a small boat, with its keel below the waterline" width="160" />
+  </picture>
+</p>
+
 # Keel
 
 **AI changed your job. It didn't change who you are.**
