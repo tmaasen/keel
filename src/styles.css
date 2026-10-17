@@ -163,11 +163,16 @@ a, a.link { color: var(--accent); }
 .script { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 12px 14px; margin: 10px 0; }
 .script-head { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: .88rem; }
 .script p { margin: 6px 0 0; }
+.script [role="status"]:empty { margin: 0; }
 .tag { display: inline-block; font-size: .75rem; padding: 1px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); margin-left: 4px; }
 .support-list h3 { font-size: 1.1rem; margin: 22px 0 8px; }
 .support-list ul { list-style: none; padding: 0; display: grid; gap: 10px; margin: 0; }
 .support-list li { display: grid; gap: 2px; }
 .support-list li span { color: var(--muted); font-size: .92rem; }
+.support-list li .crisis-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+a.button { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 16px; border-radius: 10px; text-decoration: none; font-weight: 500; }
+a.button.primary { background: var(--accent); color: var(--bg); }
+.link.back { margin: 0 0 12px; padding-left: 0; }
 
 /* Feedback */
 .feedback-panel {

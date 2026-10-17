@@ -33,6 +33,12 @@ export function acknowledgment(profile: Partial<Doc<"profiles">>, feelings: Feel
       lines.push("Whatever brought you here, you're welcome.");
   }
 
+  if (feelings.includes("struggling")) {
+    lines.push(
+      "You told us you're really struggling. That matters more than anything else here. Please reach out to someone today: a person you trust, or one of the people on the support page.",
+    );
+  }
+
   const hit = profile.aiImpact && profile.aiImpact !== "exploring" && profile.aiImpact !== "worried";
   if (hit && (profile.identityTie === "who_i_was" || profile.identityTie === "a_lot")) {
     lines.push("If this work was a big part of who you are, it makes sense that this feels bigger than a job.");

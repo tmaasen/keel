@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import type { Doc } from "../../convex/_generated/dataModel";
 import type { View } from "../App";
 import { TranslateWork } from "../components/TranslateWork";
@@ -167,16 +168,32 @@ function Block(props: { title: string; children: React.ReactNode }) {
 }
 
 function Script(props: { title: string; children: string }) {
-  const copy = () => {
-    void navigator.clipboard?.writeText(props.children).catch(() => {});
+  const [status, setStatus] = useState<"idle" | "copied" | "failed">("idle");
+  const copy = async () => {
+    try {
+      if (!navigator.clipboard) throw new Error("no clipboard");
+      await navigator.clipboard.writeText(props.children);
+      setStatus("copied");
+    } catch {
+      setStatus("failed");
+    }
   };
+  useEffect(() => {
+    if (status !== "copied") return;
+    const t = setTimeout(() => setStatus("idle"), 2500);
+    return () => clearTimeout(t);
+  }, [status]);
   return (
     <div className="script">
       <div className="script-head">
         <span>{props.title}</span>
-        <button className="link" onClick={copy}>Copy</button>
+        <button className="link" onClick={copy}>{status === "copied" ? "Copied" : "Copy"}</button>
       </div>
       <p>{props.children}</p>
+      <p className="helper" role="status">
+        {status === "copied" && "Copied. You can paste it into an email or message."}
+        {status === "failed" && "Couldn't copy automatically. Press and hold the text above to select and copy it."}
+      </p>
     </div>
   );
 }

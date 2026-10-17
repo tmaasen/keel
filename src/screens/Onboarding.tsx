@@ -43,12 +43,32 @@ const STEPS = [
 type Step = (typeof STEPS)[number];
 const QUESTION_COUNT = STEPS.length - 3; // excludes welcome, acknowledge, start
 
+/** Remember the step so a reload or app switch doesn't send someone back to the start. */
+const STEP_KEY = "keel.onboardingStep";
+const readStep = () => {
+  try {
+    const n = Number(localStorage.getItem(STEP_KEY));
+    return Number.isInteger(n) && n > 0 && n < STEPS.length ? n : 0;
+  } catch {
+    return 0;
+  }
+};
+const writeStep = (n: number | null) => {
+  try {
+    if (n === null) localStorage.removeItem(STEP_KEY);
+    else localStorage.setItem(STEP_KEY, String(n));
+  } catch {
+    /* storage unavailable: the flow still works, it just won't survive a reload */
+  }
+};
+
 export function Onboarding({ profile, onDone }: { profile: Profile | null; onDone: (view: View) => void }) {
   const upsert = useMutation(api.profiles.upsert);
-  const [i, setI] = useState(0);
+  const [i, setI] = useState(readStep);
   const [a, setA] = useState<Answers>(profile ?? {});
   const [feelings, setFeelings] = useState<FeelingId[]>([]);
   const [showSupport, setShowSupport] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const step: Step = STEPS[i];
 
   const wasHit = a.aiImpact === "lost_job" || a.aiImpact === "drying_up" || a.aiImpact === "job_changing";
@@ -71,28 +91,50 @@ export function Onboarding({ profile, onDone }: { profile: Profile | null; onDon
     }
   };
 
+  const struggling = feelings.includes("struggling");
+
   const go = (delta: number) => {
-    setI((n) => Math.min(Math.max(n + delta, 0), STEPS.length - 1));
+    setSaveError(null);
+    setI((n) => {
+      const to = Math.min(Math.max(n + delta, 0), STEPS.length - 1);
+      writeStep(to);
+      return to;
+    });
     window.scrollTo({ top: 0 });
   };
-  const next = async () => {
-    await save(fieldsFor(step));
-    if (step === "feelings" && feelings.includes("struggling") && !showSupport) {
+  /** Someone who says they're really struggling sees human support first, whether they press Next or Skip. */
+  const offerSupportFirst = () => {
+    if (step === "feelings" && struggling && !showSupport) {
       setShowSupport(true);
-      return;
+      window.scrollTo({ top: 0 });
+      return true;
     }
-    setShowSupport(false);
+    return false;
+  };
+  // Convex queues writes while offline and retries, so advance right away; only a real rejection shows an error.
+  const next = () => {
+    save(fieldsFor(step)).catch(() =>
+      setSaveError("Some of your answers didn't save. You can go back and try that question again."),
+    );
+    if (offerSupportFirst()) return;
     go(1);
   };
   const skip = async () => {
-    if (step === "ai") await save({ aiPreference: "off" });
-    setShowSupport(false);
+    if (offerSupportFirst()) return;
+    // AI defaults to off, so a failed save here changes nothing.
+    if (step === "ai") await save({ aiPreference: "off" }).catch(() => {});
     go(1);
   };
 
   const bridgeFirst = a.runway === "under_1m" || a.runway === "1_2m" || a.firstNeed === "income";
   const finish = async (view: View) => {
-    await save({ onboardingCompletedAt: Date.now() });
+    try {
+      await save({ onboardingCompletedAt: Date.now() });
+    } catch {
+      setSaveError("We couldn't save that just now. Check your connection and try again.");
+      return;
+    }
+    writeStep(null);
     onDone(view);
   };
 
@@ -101,7 +143,7 @@ export function Onboarding({ profile, onDone }: { profile: Profile | null; onDon
 
   return (
     <section className="onboarding">
-      {isQuestion && (
+      {isQuestion && !showSupport && (
         <p className="progress" aria-live="polite">
           {questionNumber} of {QUESTION_COUNT}
         </p>
@@ -115,6 +157,8 @@ export function Onboarding({ profile, onDone }: { profile: Profile | null; onDon
           </p>
           <SupportList />
           <div className="actions">
+            <button className="link" onClick={() => setShowSupport(false)}>Back</button>
+            <span className="spacer" />
             <button className="primary" onClick={() => { setShowSupport(false); go(1); }}>
               Continue when you're ready
             </button>
@@ -150,6 +194,9 @@ export function Onboarding({ profile, onDone }: { profile: Profile | null; onDon
               <input
                 value={a.displayName ?? ""}
                 onChange={(e) => set({ displayName: e.target.value })}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") next();
+                }}
                 placeholder="First name or nickname"
                 autoFocus
               />
@@ -271,25 +318,41 @@ export function Onboarding({ profile, onDone }: { profile: Profile | null; onDon
                   Your answers are saved in this browser.
                 </p>
               )}
+              {struggling && (
+                <p>
+                  You told us you're really struggling. Talking to someone today matters more than anything else here.
+                </p>
+              )}
               <div className="paths">
+                {struggling && (
+                  <PathCard
+                    recommended
+                    title="Talk to a person"
+                    text="Crisis lines, benefits help, financial counseling, and community. Keel is not a substitute for people."
+                    onClick={() => finish("support")}
+                  />
+                )}
                 <PathCard
-                  recommended={bridgeFirst}
+                  recommended={bridgeFirst && !struggling}
                   title="Steady ground"
                   text="Practical help for right now: benefits, health coverage, reaching back out to people who value your work, and bridge income."
                   onClick={() => finish("bridge")}
                 />
                 <PathCard
-                  recommended={!bridgeFirst}
+                  recommended={!bridgeFirst && !struggling}
                   title="What matters to me"
                   text="Reflect on your values and your life outside work, then write a personal mission statement in your own words."
                   onClick={() => finish("discover")}
                 />
-                <PathCard
-                  title="Talk to a person"
-                  text="Crisis lines, benefits help, financial counseling, and community. Keel is not a substitute for people."
-                  onClick={() => finish("support")}
-                />
+                {!struggling && (
+                  <PathCard
+                    title="Talk to a person"
+                    text="Crisis lines, benefits help, financial counseling, and community. Keel is not a substitute for people."
+                    onClick={() => finish("support")}
+                  />
+                )}
               </div>
+              {saveError && <p className="error" role="alert">{saveError}</p>}
               <p className="helper">You can switch between these any time.</p>
             </div>
           )}
@@ -297,12 +360,15 @@ export function Onboarding({ profile, onDone }: { profile: Profile | null; onDon
       )}
 
       {isQuestion && !showSupport && (
-        <div className="actions">
-          <button className="link" onClick={() => go(-1)}>Back</button>
-          <span className="spacer" />
-          <button onClick={skip}>Skip</button>
-          <button className="primary" onClick={next}>Next</button>
-        </div>
+        <>
+          {saveError && <p className="error" role="alert">{saveError}</p>}
+          <div className="actions">
+            <button className="link" onClick={() => go(-1)}>Back</button>
+            <span className="spacer" />
+            <button onClick={skip}>Skip</button>
+            <button className="primary" onClick={next}>Next</button>
+          </div>
+        </>
       )}
     </section>
   );

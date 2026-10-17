@@ -7,7 +7,15 @@ const RESOURCES = [
   {
     group: "If you're in crisis",
     items: [
-      { name: "988 Suicide & Crisis Lifeline", detail: "Call or text 988 (US and Canada). Free, 24/7.", href: "https://988lifeline.org" },
+      {
+        name: "988 Suicide & Crisis Lifeline",
+        detail: "Call or text 988 (US and Canada). Free, 24/7.",
+        href: "https://988lifeline.org",
+        actions: [
+          { label: "Call 988", href: "tel:988" },
+          { label: "Text 988", href: "sms:988" },
+        ],
+      },
       { name: "Find a helpline", detail: "Free crisis lines in many other countries.", href: "https://findahelpline.com" },
       { name: "Emergency services", detail: "If you or someone else is in immediate danger, call your local emergency number." },
     ],
@@ -55,6 +63,13 @@ export function SupportList() {
                   <strong>{r.name}</strong>
                 )}
                 <span>{r.detail}</span>
+                {"actions" in r && r.actions && (
+                  <span className="crisis-actions">
+                    {r.actions.map((a) => (
+                      <a key={a.href} className="button primary" href={a.href}>{a.label}</a>
+                    ))}
+                  </span>
+                )}
               </li>
             ))}
           </ul>
@@ -64,9 +79,12 @@ export function SupportList() {
   );
 }
 
-export function Support() {
+export function Support({ onBack }: { onBack?: () => void }) {
   return (
     <section>
+      {onBack && (
+        <button className="link back" onClick={onBack}>Back to where I was</button>
+      )}
       <h2 className="stage-question">You don't have to do this alone.</h2>
       <p className="helper">
         Keel can help you think things through, but it's not a therapist, counselor, lawyer, or financial advisor. These

@@ -34,6 +34,8 @@ export default function App() {
   const profile = useQuery(api.profiles.get, { sessionId });
   const [view, setView] = useState<View>(readView);
   const [feedbackOpen, setFeedbackOpen] = useState(false);
+  // During onboarding, support opens over the flow; the flow stays mounted so nobody loses their place.
+  const [supportOverOnboarding, setSupportOverOnboarding] = useState(false);
 
   useEffect(() => {
     try { localStorage.setItem(VIEW_KEY, view); } catch { /* storage unavailable */ }
@@ -57,11 +59,32 @@ export default function App() {
           <img className="brand-mark" src="/favicon.svg" alt="" width="40" height="40" />
           Keel
         </span>
-        <button className="link" onClick={() => goTo("support")}>Talk to a person</button>
+        <button
+          className="link"
+          onClick={() => {
+            if (onboarding) {
+              setSupportOverOnboarding(true);
+              window.scrollTo({ top: 0 });
+            } else {
+              goTo("support");
+            }
+          }}
+        >
+          Talk to a person
+        </button>
       </header>
 
       {onboarding ? (
-        <Onboarding profile={profile} onDone={goTo} />
+        <>
+          {supportOverOnboarding && (
+            <main>
+              <Support onBack={() => setSupportOverOnboarding(false)} />
+            </main>
+          )}
+          <div hidden={supportOverOnboarding}>
+            <Onboarding profile={profile} onDone={goTo} />
+          </div>
+        </>
       ) : (
         <>
           <nav className="stages" aria-label="Sections">
