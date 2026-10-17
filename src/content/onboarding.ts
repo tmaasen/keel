@@ -36,7 +36,7 @@ export const FIRST_NEED = [
   { id: "not_sure", label: "I'm not sure", hint: "That's okay too" },
 ] as const;
 
-export const YEARS = ["Under 2 years", "2–5 years", "5–10 years", "10–20 years", "20+ years"] as const;
+export const YEARS = ["Under 2 years", "2–5 years", "5–10 years", "10–20 years", "20–30 years", "30+ years"] as const;
 
 export const IDENTITY_TIE = [
   { id: "a_little", label: "A little. It was mostly a job." },

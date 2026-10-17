@@ -305,7 +305,7 @@ export function Onboarding({ profile, onDone }: { profile: Profile | null; onDon
             <div className="card acknowledge">
               {a.displayName && <p className="eyebrow">{a.displayName},</p>}
               {acknowledgment(a, feelings).map((line) => <p key={line}>{line}</p>)}
-              <button className="primary" onClick={() => go(1)}>Thank you</button>
+              <button className="primary" onClick={() => go(1)}>Choose where to start</button>
             </div>
           )}
 

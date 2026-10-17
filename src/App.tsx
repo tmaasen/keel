@@ -98,7 +98,7 @@ export default function App() {
                 {n.label}
               </button>
             ))}
-            <button className="stage" disabled title="Coming soon">Find work that fits</button>
+            <button className="stage" disabled>Find work that fits (coming soon)</button>
           </nav>
 
           <main>

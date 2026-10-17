@@ -9,8 +9,15 @@ import { TranslateWork } from "../components/TranslateWork";
  * Most links are US-focused for now.
  */
 export function Bridge({ profile, goTo }: { profile: Doc<"profiles"> | null; goTo: (v: View) => void }) {
-  const freelancer = profile?.aiImpact === "drying_up";
-  const stillEmployed = profile?.aiImpact === "job_changing" || profile?.runway === "has_income";
+  const situation = profile?.aiImpact;
+  const freelancer = situation === "drying_up";
+  const lostWork = situation === "lost_job" || situation === "drying_up";
+  const shortOnMoney = profile?.runway === "under_1m" || profile?.runway === "1_2m";
+  // Unemployment, COBRA, and severance only make sense for people who lost income (or haven't told us).
+  const showProtect =
+    profile?.runway !== "has_income" && situation !== "job_changing" && (lostWork || shortOnMoney || !situation);
+  const role = profile?.work?.role?.trim();
+  const roleWork = role ? `${role} work` : "[the kind of work you do]";
   const needsFlex = profile?.constraints?.some((c) => c === "flexible_hours" || c === "caregiver");
 
   return (
@@ -21,7 +28,7 @@ export function Bridge({ profile, goTo }: { profile: Doc<"profiles"> | null; goT
         Take what's useful here and skip the rest.
       </p>
 
-      {!stillEmployed && (
+      {showProtect && (
         <Block title="This week: protect what you have">
           <ul className="checklist">
             <li>
@@ -51,19 +58,19 @@ export function Bridge({ profile, goTo }: { profile: Doc<"profiles"> | null; goT
       <Block title="Reach back out to people who value your work">
         <p>
           The people who helped most in our research weren't job boards. They were former managers, clients, and
-          coworkers. Some companies that replaced people with AI are quietly hiring them back, often as contractors.
+          coworkers. Some people were even asked back after AI didn't work out, usually as contractors.
         </p>
+        <p className="helper">Replace anything in [brackets] before you send it.</p>
         {profile?.valuedBy && (
           <p className="callout">You mentioned: <em>{profile.valuedBy}</em></p>
         )}
         <Script title="To a former client or manager">
-          Hi [name], I hope you're doing well. My situation has changed and I'm taking on [kind of work] again. You know
-          my work better than most, so I wanted to reach out first. If anything comes up, or if you know someone who
-          could use help, I'd be grateful.
+          {lostWork
+            ? `Hi [name], I hope you're doing well. My situation has changed and I'm looking for ${roleWork} again. You know my work better than most, so I wanted to reach out first. If anything comes up, or if you know someone who could use help, I'd be grateful.`
+            : "Hi [name], I hope you're doing well. I've been thinking about what's next in my work, and you know my work better than most. Would you be up for a quick call sometime? I'd value your perspective."}
         </Script>
         <Script title="To a former coworker">
-          Hey [name], it's been a while. I'm looking for my next thing and thought of you. Would you be up for a quick
-          call sometime? I'd love to hear how things are going for you, too.
+          {`Hey [name], it's been a while. ${lostWork ? "I'm looking for my next thing" : "I've been thinking about what's next for me"} and thought of you. Would you be up for a quick call sometime? I'd love to hear how things are going for you, too.`}
         </Script>
         <Script title="To someone doing work you're curious about">
           Hi [name], I came across your work at [organization] and I'm exploring [kind of work]. Would you be open to a

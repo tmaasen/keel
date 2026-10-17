@@ -60,14 +60,16 @@ export function TranslateWork({ profile }: { profile: Doc<"profiles"> | null }) 
       </p>
       <label className="field">
         <span>What did you actually do?</span>
+        <span className="helper" id="what-i-did-help">
+          Some questions to get you started: What did a normal week look like? Who did you work with or for? What
+          problems landed on your desk? What would have broken if you weren't there? What were you trusted with?
+        </span>
         <textarea
           rows={6}
           value={whatIDid}
           onChange={(e) => setWhatIDid(e.target.value)}
-          placeholder={
-            "What did a normal week look like? Who did you work with or for? What problems landed on your desk? " +
-            "What would have broken if you weren't there? What were you trusted with?"
-          }
+          aria-describedby="what-i-did-help"
+          placeholder="For example: I answered subscriber calls, then ran the call center and managed our offshore team."
         />
       </label>
 
@@ -81,18 +83,19 @@ export function TranslateWork({ profile }: { profile: Doc<"profiles"> | null }) 
 
       <label className="field">
         <span>{skillsBy === "guide_draft" ? "Skills (AI draft: change anything that isn't true)" : "Skills"}</span>
+        <span className="helper" id="skills-help">
+          One per line. Turn each thing you did into an action: "dealt with angry customers" becomes "Resolved
+          escalated customer issues."
+        </span>
         <textarea
+          aria-describedby="skills-help"
           rows={8}
           value={skills}
           onChange={(e) => {
             setSkills(e.target.value);
             setSkillsBy("person");
           }}
-          placeholder={
-            "One per line. Turn each thing you did into an action, e.g.\n" +
-            "\"dealt with angry customers\" → Resolved escalated customer issues\n" +
-            "\"kept the offshore team on track\" → Managed vendor and offshore teams"
-          }
+          placeholder={"For example:\nResolved escalated customer issues\nManaged vendor and offshore teams"}
         />
       </label>
       <div className="row">

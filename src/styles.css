@@ -137,6 +137,7 @@ a, a.link { color: var(--accent); }
 .choice-hint { display: block; color: var(--muted); font-size: .9rem; margin-top: 2px; }
 .field { display: grid; gap: 6px; margin-bottom: 14px; }
 .field span, .field-label { font-weight: 500; margin: 0 0 6px; }
+.field .helper { font-weight: 400; margin: 0; }
 .actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 18px; }
 .actions button.primary { margin-top: 0; }
 
