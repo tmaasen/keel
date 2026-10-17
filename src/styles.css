@@ -95,9 +95,9 @@ a, a.link { color: var(--accent); text-underline-offset: 3px; }
 
 .tester-strip {
   display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; justify-content: center;
-  padding: 6px 16px; background: var(--water-deep); color: var(--on-water-muted); font-size: 0.82rem;
+  padding: 0 16px; background: var(--water-deep); color: var(--on-water-muted); font-size: 0.82rem;
 }
-.tester-strip .link { color: var(--on-water); padding: 2px 4px; min-height: 0; }
+.tester-strip .link { color: var(--on-water); padding: 0 6px; min-height: 44px; }
 
 .horizon { position: relative; height: 104px; overflow: hidden; }
 .horizon-art { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -138,7 +138,7 @@ a, a.link { color: var(--accent); text-underline-offset: 3px; }
   .tab { text-align: left; }
 }
 
-.page { max-width: calc(var(--measure) + 32px); margin: 0 auto; padding: 28px 16px 48px; }
+.page { max-width: calc(var(--measure) + 32px); margin: 0 auto; padding: 28px 16px 0; }
 
 /* ---------- Type ---------- */
 
@@ -394,7 +394,6 @@ input[type="checkbox"], input[type="radio"] { width: 20px; height: 20px; accent-
 .lake :focus-visible { outline-color: var(--sun); }
 .lake .helper { color: var(--on-water-muted); }
 .actions.closing { margin-top: 56px; padding-top: 28px; padding-bottom: 28px; }
-.page { padding-bottom: 0; }
 .page:has(.closing) footer { margin-top: 0; padding-top: 4px; }
 .page:has(.onboarding) footer { padding-bottom: 120px; }
 
@@ -415,12 +414,12 @@ footer { margin-top: 72px; padding-top: 26px; padding-bottom: 40px; font-size: 0
 
 .feedback-panel {
   position: fixed; right: 16px; bottom: 16px; left: 16px; max-width: 420px; margin-left: auto; z-index: 40;
-  background: var(--raised); color: var(--ink); border: 1.5px solid var(--edge); border-radius: var(--radius); padding: 16px;
-  display: grid; gap: 10px; box-shadow: 0 12px 32px rgb(6 20 24 / 0.22);
+  background: var(--raised); color: var(--ink); border: 2px solid var(--accent); border-radius: var(--radius); padding: 16px;
+  display: grid; gap: 10px;
 }
 .chips { display: flex; gap: 6px; flex-wrap: wrap; }
 .chip { min-height: 44px; padding: 6px 12px; font-size: 0.92rem; }
-.chip.selected { border: 2px solid var(--accent); background: var(--select); }
+.chip.selected { border-color: var(--accent); background: var(--select); }
 
 /* ---------- Wider screens ---------- */
 
