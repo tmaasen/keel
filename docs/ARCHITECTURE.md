@@ -52,12 +52,15 @@ The foundation uses an anonymous `sessionId` generated in the browser so the app
 - [ ] Iterative drafting with side-by-side versions
 - [ ] Shareable, public "mission page" (opt-in)
 
-### Phase 3 — Navigate
-- [ ] Transferable-skills inventory from work history
+### Phase 3 — Navigate (plan: [NAVIGATE.md](./NAVIGATE.md))
+- [x] Transferable-skills inventory from work history ("Translate your work" on Steady ground)
 - [ ] Rebuilding toolkit: restore rhythm, connection, purpose, identity, and activity during the search (see [FOUNDATIONS.md](./FOUNDATIONS.md))
 - [ ] Job crafting: reshape a current role instead of leaving it
-- [ ] Career path exploration scored against the accepted mission
-- [ ] Job search and tracking (ideas borrowed from career-ops), always draft-only
+- [ ] Paths that fit your mission (discovery from skills, values, and mission; reasons, never scores)
+- [ ] Paste a job: is it real and open, and how it fits (career-ops method)
+- [ ] Who to talk to: outreach drafts before applications
+- [ ] Honest CV and cover letter drafts (drafter-reviewer, nothing invented)
+- [ ] Search from legal public sources (USAJobs, CareerOneStop, public company boards), always draft-only
 
 ### Phase 4 — Community
 - [ ] Self-hosting guide for workforce programs, libraries, unions

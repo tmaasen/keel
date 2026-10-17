@@ -116,4 +116,8 @@ Keel is free for everyone and funded entirely by donations: never ads, never you
 
 ## License
 
-[MIT](./LICENSE)
+Keel is free and open source under the [GNU Affero General Public License v3.0 or later](./LICENSE) (AGPL-3.0). You can use, study, change, and share it, and run it for your library, union, school, or workforce program. If you run a modified version as a service for others, you must share your changes under the same license.
+
+Versions of Keel published before October 2026 were released under the MIT License; that grant still applies to those versions.
+
+The name "Keel" and the Keel logo are not covered by the code license. See [TRADEMARK.md](./TRADEMARK.md).

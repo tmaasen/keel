@@ -16,6 +16,10 @@ Thank you for wanting to help. Keel exists for people going through one of the h
 3. Never add analytics, tracking, or data sharing without an explicit, opt-in design discussion.
 4. AI output is always a draft the person can accept, edit, or discard.
 
+## Licensing your contribution
+
+Keel is licensed under the [AGPL-3.0-or-later](./LICENSE). By contributing, you agree your contribution is licensed the same way.
+
 ## Development
 
 ```bash
