@@ -94,6 +94,8 @@ export const profileFields = {
   constraints: v.optional(v.array(constraint)),
   valuedBy: v.optional(v.string()),
   aiPreference: v.optional(aiPreference),
+  /** Steady ground "This week" items the person has marked done. */
+  bridgeDone: v.optional(v.array(v.string())),
   onboardingCompletedAt: v.optional(v.number()),
   /** @deprecated replaced by work.role */
   currentOrRecentWork: v.optional(v.string()),

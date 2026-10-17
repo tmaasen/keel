@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
+import { useMutation } from "convex/react";
+import { api } from "../../convex/_generated/api";
 import type { Doc } from "../../convex/_generated/dataModel";
 import type { View } from "../App";
+import { sessionId } from "../session";
 import { TranslateWork } from "../components/TranslateWork";
 
 /**
  * Bridge track: steady ground for people who need income soon.
  * Framed as a bridge, not a verdict. Research: docs/USER_RESEARCH.md.
+ * Only what applies is shown; "This week" comes first and can be checked off; everything else folds away.
  * Most links are US-focused for now.
  */
 export function Bridge({ profile, goTo }: { profile: Doc<"profiles"> | null; goTo: (v: View) => void }) {
+  const upsert = useMutation(api.profiles.upsert);
   const situation = profile?.aiImpact;
   const freelancer = situation === "drying_up";
   const lostWork = situation === "lost_job" || situation === "drying_up";
@@ -20,42 +25,51 @@ export function Bridge({ profile, goTo }: { profile: Doc<"profiles"> | null; goT
   const roleWork = role ? `${role} work` : "[the kind of work you do]";
   const needsFlex = profile?.constraints?.some((c) => c === "flexible_hours" || c === "caregiver");
 
+  const [done, setDone] = useState<string[]>(profile?.bridgeDone ?? []);
+  useEffect(() => setDone(profile?.bridgeDone ?? []), [profile?.bridgeDone]);
+  const toggleDone = (id: string) => {
+    const next = done.includes(id) ? done.filter((x) => x !== id) : [...done, id];
+    setDone(next);
+    void upsert({ sessionId, bridgeDone: next }).catch(() => setDone(done));
+  };
+
   return (
     <section className="bridge">
-      <h2 className="stage-question">Steady ground first.</h2>
-      <p className="helper">
+      <h1 className="screen-title">Steady ground</h1>
+      <p className="lede">
         Getting income and stability back isn't giving up on what matters to you. It's what makes the rest possible.
         Take what's useful here and skip the rest.
       </p>
 
       {showProtect && (
-        <Block title="This week: protect what you have">
-          <ul className="checklist">
-            <li>
-              <strong>Apply for unemployment now.</strong> Don't wait until savings run out; start dates and rules
-              vary by state. <a href="https://www.usa.gov/unemployment-benefits" target="_blank" rel="noreferrer">Find your state's office</a>.
+        <section className="this-week" aria-labelledby="this-week-title">
+          <h2 id="this-week-title">This week: protect what you have</h2>
+          <ol className="week-list">
+            <WeekItem id="unemployment" done={done} onToggle={toggleDone} title="Apply for unemployment now.">
+              Don't wait until savings run out; start dates and rules vary by state.{" "}
+              <a href="https://www.usa.gov/unemployment-benefits" target="_blank" rel="noreferrer">Find your state's office</a>.
               {freelancer && (
-                <em> If you were freelance or self-employed, you may not qualify for regular unemployment, but check with your state anyway.</em>
+                <> If you were freelance or self-employed, you may not qualify for regular unemployment, but check with your state anyway.</>
               )}
-            </li>
-            <li>
-              <strong>Keep health coverage.</strong> Losing job-based coverage usually opens a 60-day window on{" "}
+            </WeekItem>
+            <WeekItem id="health" done={done} onToggle={toggleDone} title="Keep health coverage.">
+              Losing job-based coverage usually opens a 60-day window on{" "}
               <a href="https://www.healthcare.gov/coverage-outside-open-enrollment/special-enrollment-period/" target="_blank" rel="noreferrer">HealthCare.gov</a>.
               COBRA is another option, but often costs more.
-            </li>
-            <li>
-              <strong>Don't rush a severance agreement.</strong> You can usually ask for time to review it, and it's worth
-              having someone look it over. <a href="https://www.lawhelp.org" target="_blank" rel="noreferrer">Free legal help</a>.
-            </li>
-            <li>
-              <strong>Call 211</strong> for local help with rent, food, and utilities. Telling landlords and lenders early
-              often opens hardship options. <a href="https://www.211.org" target="_blank" rel="noreferrer">211.org</a>
-            </li>
-          </ul>
-        </Block>
+            </WeekItem>
+            <WeekItem id="severance" done={done} onToggle={toggleDone} title="Don't rush a severance agreement.">
+              You can usually ask for time to review it, and it's worth having someone look it over.{" "}
+              <a href="https://www.lawhelp.org" target="_blank" rel="noreferrer">Free legal help</a>.
+            </WeekItem>
+            <WeekItem id="211" done={done} onToggle={toggleDone} title="Call 211 for local help with rent, food, and utilities.">
+              Telling landlords and lenders early often opens hardship options.{" "}
+              <a href="https://www.211.org" target="_blank" rel="noreferrer">211.org</a>
+            </WeekItem>
+          </ol>
+        </section>
       )}
 
-      <Block title="Reach back out to people who value your work">
+      <Fold id="reach-out" title="Reach back out to people who value your work">
         <p>
           The people who helped most in our research weren't job boards. They were former managers, clients, and
           coworkers. Some people were even asked back after AI didn't work out, usually as contractors.
@@ -85,53 +99,53 @@ export function Bridge({ profile, goTo }: { profile: Doc<"profiles"> | null; goT
           value. Contract work doesn't come with benefits, paid time off, or job security, so a common rule of thumb is
           to charge well above your old hourly pay.
         </p>
-      </Block>
+      </Fold>
 
-      <Block title="Put your experience into words">
+      <Fold id="your-words" title="Put your experience into words">
         <TranslateWork profile={profile} />
-      </Block>
+      </Fold>
 
       {freelancer && (
-        <Block title="Finding clients off the platforms">
+        <Fold id="clients" title="Finding clients off the platforms">
           <p>
             Freelancers in our research described platforms burying them despite years of five-star work. What helped
             was owning the relationship directly.
           </p>
-          <ul className="checklist">
+          <ul className="rows">
             <li><strong>Go back to past clients first,</strong> by email, not through the platform. They already trust your work.</li>
             <li><strong>Pick a niche you know</strong> and reach out to a few businesses in it directly, with a short example of what you'd do for them.</li>
             <li><strong>Keep a simple portfolio</strong> you control. For creative work, it speaks louder than a résumé.</li>
             <li><strong>Price for the work, not the platform.</strong> Direct clients often pay more than platform rates.</li>
           </ul>
-        </Block>
+        </Fold>
       )}
 
-      <Block title="Bridge income">
+      <Fold id="bridge-income" title="Bridge income">
         <p>
           A bridge job isn't a verdict on who you are. People in our research drove school buses, tended bar, and took
           contract work while they figured out what was next.
           {needsFlex && <strong> Since you need flexibility, look first at the options marked "flexible."</strong>}
         </p>
-        <ul className="options">
+        <ul className="rows">
           <li><strong>Contract or temp work in your field</strong> through staffing agencies. Often the fastest path to pay that matches your experience.</li>
           <li><strong>Consulting or project work</strong> for past employers or clients. <span className="tag">flexible</span></li>
           <li><strong>Teaching or tutoring what you know,</strong> privately or through community programs. <span className="tag">flexible</span></li>
           <li><strong>Hourly work with quick starts:</strong> retail, hospitality, delivery, warehouse, transit. Seasonal hiring picks up before the holidays.</li>
           <li><strong>Your local American Job Center</strong> offers free help and often knows who's hiring now. <a href="https://www.careeronestop.org" target="_blank" rel="noreferrer">CareerOneStop</a></li>
         </ul>
-      </Block>
+      </Fold>
 
-      <Block title="Keep your footing">
-        <ul className="checklist">
+      <Fold id="footing" title="Keep your footing">
+        <ul className="rows">
           <li><strong>Keep a daily rhythm.</strong> A job gives structure without our noticing. Keep a wake-up time and a few anchors in your day.</li>
           <li><strong>Cap the search.</strong> A few focused hours on a few days a week beats all day, every day. Some people apply every other day just to keep from burning out, and that's sensible.</li>
           <li><strong>Favor people over portals.</strong> Hundreds of cold applications wear you down. A handful of warm conversations usually go further.</li>
           <li><strong>See people.</strong> Plan at least one thing a week with other people: a friend, a job club at the library, a volunteer shift.</li>
           <li><strong>Do one useful thing a day,</strong> even something small. Being useful matters as much as being paid.</li>
         </ul>
-      </Block>
+      </Fold>
 
-      <Block title="Explaining it to the people around you">
+      <Fold id="family" title="Explaining it to the people around you">
         <p>
           Family and friends often mean well and still say things like "just get a job in AI." It can help to tell them
           what's actually going on, and what would help.
@@ -141,36 +155,60 @@ export function Bridge({ profile, goTo }: { profile: Doc<"profiles"> | null; goT
           hearing nothing back, and it isn't about effort. What would help me most is [encouragement / introductions to
           people you know / not asking about it every day]. I'll tell you when there's news.
         </Script>
-      </Block>
+      </Fold>
 
-      <Block title="Before you invest in a new path">
+      <Fold id="new-path" title="Before you invest in a new path">
         <p>
           No one can tell you which jobs AI won't touch, including us. Some people in our research retrained into
           something AI then hit too. So instead of looking for a safe bet, test before you spend months or savings:
         </p>
-        <ul className="checklist">
+        <ul className="rows">
           <li>Are employers actually hiring people with this training near me?</li>
           <li>How long and how much does it cost? Can I earn while I train?</li>
           <li>Does it rely on judgment, physical presence, trust, or accountability that people still want from a person?</li>
           <li>Have I talked to two people who do this work today?</li>
           <li>Can I try it small first, like a weekend, a short course, or shadowing someone, before committing?</li>
         </ul>
-      </Block>
+      </Fold>
 
-      <div className="actions">
-        <button onClick={() => goTo("support")}>Talk to a person</button>
+      <div className="actions closing lake">
+        <button className="quiet" onClick={() => goTo("support")}>Talk to a person</button>
         <button className="primary" onClick={() => goTo("discover")}>When you're ready: what matters to me</button>
       </div>
     </section>
   );
 }
 
-function Block(props: { title: string; children: React.ReactNode }) {
+/** One "This week" item: a fixed row whose done state restyles it in place. */
+function WeekItem(props: {
+  id: string;
+  title: string;
+  done: string[];
+  onToggle: (id: string) => void;
+  children: React.ReactNode;
+}) {
+  const isDone = props.done.includes(props.id);
   return (
-    <div className="block">
-      <h3>{props.title}</h3>
-      {props.children}
-    </div>
+    <li className={isDone ? "week-item done" : "week-item"}>
+      <div className="week-body">
+        <strong>{props.title}</strong> {props.children}
+      </div>
+      <label className="week-check">
+        <input type="checkbox" checked={isDone} onChange={() => props.onToggle(props.id)} />
+        <span>{isDone ? "Done" : "Mark done"}</span>
+      </label>
+    </li>
+  );
+}
+
+function Fold(props: { id: string; title: string; children: React.ReactNode }) {
+  return (
+    <details className="fold" id={props.id}>
+      <summary>
+        <h2>{props.title}</h2>
+      </summary>
+      <div className="fold-body">{props.children}</div>
+    </details>
   );
 }
 

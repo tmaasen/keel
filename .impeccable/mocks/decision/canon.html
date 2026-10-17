@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<title>Keel · Category standard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #f7f4ee; --card: #ffffff; --ink: #1f2a33; --muted: #5d6b75; --accent: #1d4e5f; --line: #e2ddd3; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 390px; height: 844px; overflow: hidden; }
+  body { font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--ink); }
+  header { height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
+  .brand { font-weight: 600; font-size: 20px; color: var(--accent); }
+  header a { color: var(--accent); font-size: 15px; }
+  .prog { margin: 4px 20px 0; height: 6px; background: var(--line); border-radius: 3px; }
+  .prog b { display: block; width: 20%; height: 100%; background: var(--accent); border-radius: 3px; }
+  .card { margin: 20px 16px 0; background: var(--card); border-radius: 20px; padding: 24px 20px; box-shadow: 0 6px 24px rgba(31,42,51,.06); }
+  h1 { font-size: 26px; line-height: 1.2; font-weight: 600; }
+  .why { margin-top: 10px; font-size: 16px; line-height: 1.5; color: var(--muted); }
+  .opts { margin-top: 18px; display: grid; gap: 10px; }
+  .opt { padding: 15px 16px; border: 1.5px solid var(--line); border-radius: 14px; font-size: 16px; }
+  .opt.on { border-color: var(--accent); background: #e9f1f3; font-weight: 500; }
+  .actions { margin: 20px 16px 0; display: flex; gap: 10px; }
+  .actions span { flex: 1; text-align: center; padding: 14px; border-radius: 999px; border: 1.5px solid var(--line); background: #fff; }
+  .actions .next { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 600; }
+</style>
+</head>
+<body>
+  <header><span class="brand">Keel</span><a href="#">Talk to a person</a></header>
+  <div class="prog"><b></b></div>
+  <div class="card">
+    <h1>What happened to your work?</h1>
+    <p class="why">There's more than one way this happens. Each one needs something different.</p>
+    <div class="opts">
+      <div class="opt on">My role was eliminated</div>
+      <div class="opt">My work has been drying up</div>
+      <div class="opt">My job changed into something I don't recognize</div>
+      <div class="opt">Nothing has happened yet, but I'm worried</div>
+    </div>
+  </div>
+  <div class="actions"><span>Skip</span><span class="next">Next</span></div>
+</body>
+</html>

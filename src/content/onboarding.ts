@@ -8,8 +8,8 @@ export const SITUATION = [
   { id: "lost_job", label: "My role was eliminated" },
   { id: "drying_up", label: "My work has been drying up" },
   { id: "job_changing", label: "My job changed into something I don't recognize" },
-  { id: "worried", label: "Nothing has happened yet, but I'm worried" },
-  { id: "exploring", label: "I want work that means more" },
+  { id: "worried", label: "Nothing has happened yet, but I'm worried", group: "Looking ahead" },
+  { id: "exploring", label: "I want work that means more", group: "Looking ahead" },
 ] as const;
 
 /** Shown with "What happened?" for people whose work was hit. Nobody has to prove it was AI. */
@@ -17,16 +17,16 @@ export const AI_ROLE = [
   { id: "told_ai", label: "They said AI was the reason" },
   { id: "suspect_ai", label: "Nobody said so, but I think AI was part of it" },
   { id: "other_reasons", label: "Outsourcing, cost-cutting, or restructuring was part of it" },
-  { id: "trained_it", label: "I was asked to use or train the AI tools" },
   { id: "not_sure", label: "I honestly don't know" },
+  { id: "trained_it", label: "I was asked to use or train the AI tools", group: "Also" },
 ] as const;
 
 export const RUNWAY = [
   { id: "under_1m", label: "Less than a month" },
   { id: "1_2m", label: "One to two months" },
   { id: "over_2m", label: "More than two months" },
-  { id: "has_income", label: "I have steady income right now" },
-  { id: "rather_not", label: "I'd rather not say" },
+  { id: "has_income", label: "I have steady income right now", group: "Or" },
+  { id: "rather_not", label: "I'd rather not say", group: "Or" },
 ] as const;
 
 export const FIRST_NEED = [
@@ -61,17 +61,17 @@ export const ORIENTATION = [
     name: "Jordan",
     story: "Jordan sees their work as part of who they are. Jordan would want to do something like it even without the paycheck.",
   },
-  { id: "mixed", name: "Some of each", story: "A bit of all three." },
-  { id: "unsure", name: "I'm not sure anymore", story: "That's a real answer, especially right now." },
+  { id: "mixed", name: "Some of each", story: "A bit of all three.", group: "Or" },
+  { id: "unsure", name: "I'm not sure anymore", story: "That's a real answer, especially right now.", group: "Or" },
 ] as const;
 
 export const CONSTRAINTS = [
-  { id: "no_relocate", label: "I can't relocate" },
-  { id: "caregiver", label: "I care for someone" },
-  { id: "flexible_hours", label: "I need flexible hours" },
-  { id: "no_school", label: "I can't go back to school right now" },
-  { id: "remote", label: "I need remote work" },
-  { id: "keep_current_job", label: "I'm keeping my current job while I figure things out" },
+  { id: "no_relocate", label: "I can't relocate", group: "Where and when" },
+  { id: "remote", label: "I need remote work", group: "Where and when" },
+  { id: "flexible_hours", label: "I need flexible hours", group: "Where and when" },
+  { id: "caregiver", label: "I care for someone", group: "Life right now" },
+  { id: "no_school", label: "I can't go back to school right now", group: "Life right now" },
+  { id: "keep_current_job", label: "I'm keeping my current job while I figure things out", group: "Life right now" },
 ] as const;
 
 /** Feelings are used on screen only and are never saved. */
@@ -80,10 +80,10 @@ export const FEELINGS = [
   { id: "angry", label: "Angry" },
   { id: "ashamed", label: "Ashamed" },
   { id: "anxious", label: "Anxious" },
-  { id: "numb", label: "Numb" },
-  { id: "relieved", label: "Relieved" },
-  { id: "okay", label: "Okay, actually" },
-  { id: "struggling", label: "I'm really struggling" },
+  { id: "numb", label: "Numb", group: "Or" },
+  { id: "relieved", label: "Relieved", group: "Or" },
+  { id: "okay", label: "Okay, actually", group: "Or" },
+  { id: "struggling", label: "I'm really struggling", hint: "We'll show you people who can help first.", group: "If it's a lot right now" },
 ] as const;
 export type FeelingId = (typeof FEELINGS)[number]["id"];
 

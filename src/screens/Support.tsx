@@ -53,7 +53,7 @@ export function SupportList() {
     <div className="support-list">
       {RESOURCES.map((g) => (
         <div key={g.group}>
-          <h3>{g.group}</h3>
+          <h2>{g.group}</h2>
           <ul>
             {g.items.map((r) => (
               <li key={r.name}>
@@ -85,7 +85,7 @@ export function Support({ onBack }: { onBack?: () => void }) {
       {onBack && (
         <button className="link back" onClick={onBack}>Back to where I was</button>
       )}
-      <h2 className="stage-question">You don't have to do this alone.</h2>
+      <h1 className="screen-title">You don't have to do this alone.</h1>
       <p className="helper">
         Keel can help you think things through, but it's not a therapist, counselor, lawyer, or financial advisor. These
         people and places can help in ways Keel can't. Most links are US-focused for now.

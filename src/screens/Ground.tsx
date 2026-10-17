@@ -24,7 +24,7 @@ export function Ground({ profile, goTo }: { profile: Doc<"profiles"> | null; goT
 
   return (
     <section>
-      <h2 className="stage-question">Where you are right now</h2>
+      <h1 className="screen-title">Where you are right now</h1>
       <p className="helper">In your words. Change anything, any time.</p>
 
       <dl className="summary">
@@ -38,7 +38,7 @@ export function Ground({ profile, goTo }: { profile: Doc<"profiles"> | null; goT
       <button onClick={() => restart({ sessionId })}>Edit my answers</button>
 
       <div className="block">
-        <h3>AI in Keel</h3>
+        <h2>AI in Keel</h2>
         <p className="helper">
           When on, AI only reflects your own words back and offers drafts you can change or discard. It never scores or
           judges you.
@@ -54,11 +54,11 @@ export function Ground({ profile, goTo }: { profile: Doc<"profiles"> | null; goT
       </div>
 
       <div className="block">
-        <h3>If you want to write more</h3>
+        <h2>If you want to write more</h2>
         <Prompts stage="ground" />
       </div>
 
-      <div className="actions">
+      <div className="actions closing lake">
         <button onClick={() => goTo("bridge")}>Steady ground</button>
         <button className="primary" onClick={() => goTo("discover")}>What matters to me</button>
       </div>

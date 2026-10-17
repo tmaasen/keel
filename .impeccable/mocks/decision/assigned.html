@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<title>Keel · The Branch Library</title>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cloth: #1e4a3b;      /* buckram green: the shell */
+    --cloth-ink: #e9f1ec;
+    --stacks: #eef1ef;     /* cool pale ground, not cream */
+    --ink: #1a2420;
+    --muted: #4d5b55;
+    --rule: #c9d3ce;
+    --stamp: #4b3f8f;      /* date-due stamp violet: reserved */
+    --label: #d9a521;      /* spine-label mustard: selection */
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 390px; height: 844px; overflow: hidden; }
+  body { font-family: "Atkinson Hyperlegible Next", system-ui, sans-serif; background: var(--stacks); color: var(--ink); }
+  header { background: var(--cloth); color: var(--cloth-ink); height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 22px; letter-spacing: .01em; }
+  .mark { width: 34px; height: 34px; }
+  header a { color: var(--cloth-ink); font-weight: 600; font-size: 16px; text-decoration: underline; text-underline-offset: 3px; }
+  .tester { background: #dfe7e3; color: var(--muted); font-size: 13px; padding: 7px 16px; border-bottom: 1px solid var(--rule); }
+  .slip { margin: 14px 16px 0; display: flex; gap: 6px; }
+  .slip span { flex: 1; height: 26px; border: 1.5px solid var(--rule); border-radius: 4px; font-size: 11px; font-weight: 800; color: transparent; display: grid; place-items: center; letter-spacing: .06em; }
+  .slip span.done { border-color: var(--stamp); color: var(--stamp); transform: rotate(-3deg); background: #ebe8f6; }
+  .slip span.now { border: 2px solid var(--ink); }
+  .count { margin: 8px 16px 0; font-size: 14px; color: var(--muted); }
+  main { padding: 18px 16px 0; }
+  h1 { font-size: 30px; line-height: 1.12; font-weight: 800; letter-spacing: -.01em; }
+  .why { margin-top: 10px; font-size: 17px; line-height: 1.45; color: var(--muted); }
+  .opts { margin-top: 20px; display: grid; gap: 0; border-top: 1.5px solid var(--ink); }
+  .opt { display: flex; align-items: center; gap: 14px; min-height: 58px; padding: 10px 6px; border-bottom: 1.5px solid var(--rule); font-size: 18px; }
+  .opt i { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--ink); flex: none; }
+  .opt.on { background: #fbf1d3; box-shadow: inset 6px 0 0 var(--label); padding-left: 16px; font-weight: 600; }
+  .opt.on i { border: 7px solid var(--cloth); }
+  .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 92px; background: #fff; border-top: 1.5px solid var(--rule); display: flex; align-items: center; gap: 10px; padding: 0 16px 14px; }
+  .bar .back { font-size: 17px; color: var(--cloth); text-decoration: underline; padding: 12px 4px; }
+  .bar .skip { margin-left: auto; font-size: 17px; padding: 14px 18px; border: 1.5px solid var(--ink); border-radius: 6px; }
+  .bar .next { font-size: 17px; font-weight: 800; padding: 14px 26px; background: var(--cloth); color: #fff; border-radius: 6px; }
+</style>
+</head>
+<body>
+  <div class="tester">Early test version · Share feedback</div>
+  <header>
+    <span class="brand">
+      <svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="22" r="13" fill="#d9a521"/><path d="M8 34h48l-7 10H15z" fill="#e9f1ec"/><path d="M4 48c14-4 42-4 56 0-14 4-42 4-56 0z" fill="#e9f1ec"/><path d="M29 49h7l-5 13z" fill="#e9f1ec"/></svg>
+      Keel
+    </span>
+    <a href="#">Talk to a person</a>
+  </header>
+  <div class="slip" aria-hidden="true">
+    <span class="done">OCT 17</span><span class="now"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <p class="count">Question 2 of 10</p>
+  <main>
+    <h1>What happened to your work?</h1>
+    <p class="why">There's more than one way this happens. Each one needs something different.</p>
+    <div class="opts">
+      <div class="opt on"><i></i>My role was eliminated</div>
+      <div class="opt"><i></i>My work has been drying up</div>
+      <div class="opt"><i></i>My job changed into something I don't recognize</div>
+      <div class="opt"><i></i>Nothing has happened yet, but I'm worried</div>
+    </div>
+  </main>
+  <div class="bar"><span class="back">Back</span><span class="skip">Skip</span><span class="next">Next</span></div>
+</body>
+</html>

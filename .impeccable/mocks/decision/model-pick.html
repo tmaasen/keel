@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<title>Keel · Works Program Poster</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --deep: #12434f; --sun: #f2b33d; --dusk: #e0662b; --sky: #cfe3e0; --ink: #14232a; --muted: #3e5560; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 390px; height: 844px; overflow: hidden; }
+  body { font-family: "Source Sans 3", system-ui, sans-serif; background: #eaf3f1; color: var(--ink); }
+  .horizon { position: relative; height: 210px; background: linear-gradient(var(--sky) 0 46%, #f6c98d 46% 62%, var(--dusk) 62% 70%, var(--deep) 70%); overflow: hidden; }
+  .sun { position: absolute; left: 50%; top: 58px; width: 120px; height: 120px; margin-left: -60px; border-radius: 50%; background: var(--sun); }
+  .water { position: absolute; left: 0; right: 0; bottom: 0; height: 63px; background: var(--deep); }
+  .water::before, .water::after { content: ""; position: absolute; left: 30px; right: 30px; height: 3px; background: #2f6b78; }
+  .water::before { top: 16px; } .water::after { top: 34px; left: 70px; right: 70px; }
+  .top { position: absolute; top: 0; left: 0; right: 0; height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; }
+  .brand { font-family: Oswald, sans-serif; font-weight: 700; font-size: 26px; letter-spacing: .08em; text-transform: uppercase; color: var(--deep); }
+  .top a { font-weight: 600; color: var(--deep); font-size: 16px; text-decoration: underline; }
+  .count { font-family: Oswald, sans-serif; font-weight: 500; font-size: 14px; letter-spacing: .12em; text-transform: uppercase; color: #a8431a; margin: 18px 16px 0; }
+  main { padding: 6px 16px 0; }
+  h1 { font-family: Oswald, sans-serif; font-weight: 700; font-size: 34px; line-height: 1.05; text-transform: uppercase; color: var(--deep); }
+  .why { margin-top: 10px; font-size: 17px; line-height: 1.45; color: var(--muted); }
+  .opts { margin-top: 18px; display: grid; gap: 8px; }
+  .opt { display: flex; align-items: center; gap: 12px; min-height: 54px; padding: 10px 14px; background: #fff; border: 2px solid #b9d2cf; font-size: 18px; }
+  .opt i { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--deep); flex: none; }
+  .opt.on { border-color: var(--deep); background: #fff3dc; font-weight: 600; }
+  .opt.on i { border: 6px solid var(--dusk); }
+  .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 88px; background: var(--deep); display: flex; align-items: center; gap: 10px; padding: 0 16px 12px; color: #fff; }
+  .bar .back { font-size: 17px; text-decoration: underline; padding: 12px 4px; }
+  .bar .skip { margin-left: auto; font-size: 17px; padding: 13px 18px; border: 2px solid #8fb5b8; }
+  .bar .next { font-family: Oswald, sans-serif; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 18px; padding: 12px 24px; background: var(--sun); color: var(--ink); }
+</style>
+</head>
+<body>
+  <div class="horizon" aria-hidden="true">
+    <div class="sun"></div>
+    <div class="water"></div>
+    <div class="top"><span class="brand">Keel</span><a href="#">Talk to a person</a></div>
+  </div>
+  <p class="count">Question 2 of 10</p>
+  <main>
+    <h1>What happened to your work?</h1>
+    <p class="why">There's more than one way this happens. Each one needs something different.</p>
+    <div class="opts">
+      <div class="opt on"><i></i>My role was eliminated</div>
+      <div class="opt"><i></i>My work has been drying up</div>
+      <div class="opt"><i></i>My job changed into something I don't recognize</div>
+      <div class="opt"><i></i>Nothing has happened yet, but I'm worried</div>
+    </div>
+  </main>
+  <div class="bar"><span class="back">Back</span><span class="skip">Skip</span><span class="next">Next</span></div>
+</body>
+</html>

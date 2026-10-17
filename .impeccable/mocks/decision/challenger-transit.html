@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<title>Keel · Transit Line</title>
+<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root { --enamel: #14213d; --porcelain: #f4f1ea; --scarlet: #d7263d; --cobalt: #1f6fd1; --amber: #f2a541; --green: #2e9e5b; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 390px; height: 844px; overflow: hidden; }
+  body { font-family: Overpass, system-ui, sans-serif; background: var(--enamel); color: var(--porcelain); }
+  header { height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; border-bottom: 2px solid #2a3a5e; }
+  .brand { font-weight: 800; font-size: 22px; }
+  header a { color: var(--porcelain); font-weight: 600; text-decoration: underline; }
+  .wrap { display: grid; grid-template-columns: 64px 1fr; height: 692px; }
+  .line { position: relative; }
+  .line::before { content: ""; position: absolute; left: 30px; top: 24px; bottom: 40px; width: 8px; background: var(--scarlet); border-radius: 4px; }
+  .stn { position: absolute; left: 22px; width: 24px; height: 24px; border-radius: 50%; background: var(--porcelain); border: 5px solid var(--scarlet); }
+  .stn.now { width: 32px; height: 32px; left: 18px; box-shadow: 0 0 0 6px rgba(215,38,61,.35); }
+  .stn.x { border-color: var(--porcelain); background: var(--green); }
+  main { padding: 22px 16px 0 4px; }
+  .count { font-size: 13px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--amber); }
+  h1 { margin-top: 8px; font-size: 30px; line-height: 1.1; font-weight: 800; }
+  .why { margin-top: 10px; font-size: 16px; line-height: 1.45; color: #c7cede; }
+  .opts { margin-top: 18px; display: grid; gap: 8px; }
+  .opt { display: flex; align-items: center; gap: 12px; min-height: 54px; padding: 10px 12px; background: #1d2c4f; border-radius: 8px; font-size: 17px; }
+  .opt i { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--porcelain); flex: none; }
+  .opt.on { background: var(--porcelain); color: var(--enamel); font-weight: 600; }
+  .opt.on i { border: 6px solid var(--scarlet); }
+  .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 92px; background: #0e1830; display: flex; align-items: center; gap: 10px; padding: 0 16px 14px; }
+  .bar .back { text-decoration: underline; padding: 12px 4px; font-size: 17px; }
+  .bar .skip { margin-left: auto; padding: 13px 18px; border: 2px solid #3a4b72; border-radius: 8px; font-size: 17px; }
+  .bar .next { padding: 13px 26px; background: var(--scarlet); border-radius: 8px; font-weight: 800; font-size: 17px; }
+</style>
+</head>
+<body>
+  <header><span class="brand">Keel</span><a href="#">Talk to a person</a></header>
+  <div class="wrap">
+    <div class="line" aria-hidden="true">
+      <span class="stn x" style="top:30px"></span>
+      <span class="stn now" style="top:150px"></span>
+      <span class="stn" style="top:330px"></span>
+      <span class="stn" style="top:480px"></span>
+      <span class="stn" style="top:610px"></span>
+    </div>
+    <main>
+      <p class="count">Ground · Question 2 of 10</p>
+      <h1>What happened to your work?</h1>
+      <p class="why">There's more than one way this happens. Each one needs something different.</p>
+      <div class="opts">
+        <div class="opt on"><i></i>My role was eliminated</div>
+        <div class="opt"><i></i>My work has been drying up</div>
+        <div class="opt"><i></i>My job changed into something I don't recognize</div>
+        <div class="opt"><i></i>Nothing has happened yet, but I'm worried</div>
+      </div>
+    </main>
+  </div>
+  <div class="bar"><span class="back">Back</span><span class="skip">Skip</span><span class="next">Next</span></div>
+</body>
+</html>

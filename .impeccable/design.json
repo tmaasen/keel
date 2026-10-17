@@ -1,0 +1,600 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-17T14:31:40+00:00",
+  "title": "Design System: Keel",
+  "extensions": {
+    "colorMeta": {
+      "sky": {
+        "role": "neutral",
+        "displayName": "Dawn Sky",
+        "canonical": "#e7f0ee",
+        "dark": "#0f252c",
+        "tonalRamp": [
+          "#070d0b",
+          "#202725",
+          "#3d4442",
+          "#5b6361",
+          "#7c8483",
+          "#9fa7a5",
+          "#c3cbc9",
+          "#e8f1ef"
+        ]
+      },
+      "raised": {
+        "role": "neutral",
+        "displayName": "Raised Mist",
+        "canonical": "#f6faf9",
+        "dark": "#16323b",
+        "tonalRamp": [
+          "#090c0b",
+          "#232625",
+          "#404342",
+          "#5f6261",
+          "#808382",
+          "#a2a6a5",
+          "#c6cac9",
+          "#ebefee"
+        ]
+      },
+      "band-sky": {
+        "role": "neutral",
+        "displayName": "Band Sky",
+        "canonical": "#d9e8e5",
+        "dark": "#12303a",
+        "tonalRamp": [
+          "#040d0c",
+          "#1c2826",
+          "#394543",
+          "#576462",
+          "#788683",
+          "#9aa9a6",
+          "#becdca",
+          "#e3f2ef"
+        ]
+      },
+      "haze": {
+        "role": "secondary",
+        "displayName": "Apricot Haze",
+        "canonical": "#f1d6b4",
+        "dark": "#22414b",
+        "tonalRamp": [
+          "#160700",
+          "#352002",
+          "#533d1f",
+          "#745d3e",
+          "#967e5e",
+          "#baa080",
+          "#dfc4a3",
+          "#feebd3"
+        ]
+      },
+      "ridge-far": {
+        "role": "tertiary",
+        "displayName": "Far Ridge",
+        "canonical": "#a9c4bd",
+        "dark": "#1c3a43",
+        "tonalRamp": [
+          "#000f0b",
+          "#132a25",
+          "#304842",
+          "#4f6761",
+          "#6f8982",
+          "#91aca5",
+          "#b5d0c9",
+          "#daf6ee"
+        ]
+      },
+      "ridge-near": {
+        "role": "tertiary",
+        "displayName": "Near Ridge",
+        "canonical": "#6f9a92",
+        "dark": "#24505a",
+        "tonalRamp": [
+          "#00100c",
+          "#002c27",
+          "#214a44",
+          "#416a63",
+          "#628c84",
+          "#84afa7",
+          "#a7d4cb",
+          "#ccfaf1"
+        ]
+      },
+      "sun": {
+        "role": "primary",
+        "displayName": "Marigold Sun",
+        "canonical": "#efb84a",
+        "dark": "#f2c25c",
+        "tonalRamp": [
+          "#140800",
+          "#332100",
+          "#573d00",
+          "#7e5a00",
+          "#a87900",
+          "#d19b24",
+          "#f7bf52",
+          "#ffeccb"
+        ]
+      },
+      "on-sun": {
+        "role": "neutral",
+        "displayName": "On Sun",
+        "canonical": "#13252a",
+        "dark": "#13252a",
+        "tonalRamp": [
+          "#000e12",
+          "#16282d",
+          "#33464b",
+          "#51656b",
+          "#72868c",
+          "#94a9b0",
+          "#b8ced4",
+          "#dcf3fa"
+        ]
+      },
+      "water": {
+        "role": "primary",
+        "displayName": "Lake Teal",
+        "canonical": "#144a56",
+        "dark": "#0a1f26",
+        "tonalRamp": [
+          "#000e14",
+          "#002b34",
+          "#134a56",
+          "#376a76",
+          "#588b99",
+          "#7bafbc",
+          "#9ed3e1",
+          "#d4f5fe"
+        ]
+      },
+      "water-deep": {
+        "role": "neutral",
+        "displayName": "Deep Water",
+        "canonical": "#0e3640",
+        "dark": "#061418",
+        "tonalRamp": [
+          "#000e15",
+          "#012a34",
+          "#224852",
+          "#426873",
+          "#628a95",
+          "#84adb9",
+          "#a8d1dd",
+          "#d5f5ff"
+        ]
+      },
+      "glint": {
+        "role": "tertiary",
+        "displayName": "Glint",
+        "canonical": "#f6d58e",
+        "dark": "#f2c25c",
+        "tonalRamp": [
+          "#130900",
+          "#322200",
+          "#553e00",
+          "#7a5c0c",
+          "#9c7e37",
+          "#c0a15b",
+          "#e6c57e",
+          "#feedc7"
+        ]
+      },
+      "on-water": {
+        "role": "neutral",
+        "displayName": "On Water",
+        "canonical": "#eef6f5",
+        "dark": "#e6f0ee",
+        "tonalRamp": [
+          "#070c0c",
+          "#212626",
+          "#3d4443",
+          "#5c6362",
+          "#7d8483",
+          "#9fa7a6",
+          "#c3cbca",
+          "#e8f0ef"
+        ]
+      },
+      "on-water-muted": {
+        "role": "neutral",
+        "displayName": "On Water Muted",
+        "canonical": "#bcd5d3",
+        "dark": "#9fbcbb",
+        "tonalRamp": [
+          "#000f0e",
+          "#152928",
+          "#314745",
+          "#506665",
+          "#708886",
+          "#93aba9",
+          "#b6cfcd",
+          "#dbf5f3"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Shore Ink",
+        "canonical": "#13252a",
+        "dark": "#e6f0ee",
+        "tonalRamp": [
+          "#000e12",
+          "#16282d",
+          "#33464b",
+          "#51656b",
+          "#72868c",
+          "#94a9b0",
+          "#b8ced4",
+          "#dcf3fa"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Slate Muted",
+        "canonical": "#43585d",
+        "dark": "#a7bebc",
+        "tonalRamp": [
+          "#000e12",
+          "#15292d",
+          "#31464b",
+          "#50656b",
+          "#71878c",
+          "#93aaaf",
+          "#b6ced4",
+          "#dbf4fa"
+        ]
+      },
+      "title": {
+        "role": "primary",
+        "displayName": "Title (Lake Teal / Moon Gold)",
+        "canonical": "#144a56",
+        "dark": "#f2c25c",
+        "tonalRamp": [
+          "#000e14",
+          "#002b34",
+          "#134a56",
+          "#376a76",
+          "#588b99",
+          "#7bafbc",
+          "#9ed3e1",
+          "#d4f5fe"
+        ]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Accent (Lake Teal / Pale Teal)",
+        "canonical": "#144a56",
+        "dark": "#8fd0cf",
+        "tonalRamp": [
+          "#000e14",
+          "#002b34",
+          "#134a56",
+          "#376a76",
+          "#588b99",
+          "#7bafbc",
+          "#9ed3e1",
+          "#d4f5fe"
+        ]
+      },
+      "edge": {
+        "role": "neutral",
+        "displayName": "Reed Edge",
+        "canonical": "#6c8784",
+        "dark": "#7a9997",
+        "tonalRamp": [
+          "#000f0e",
+          "#112a28",
+          "#2e4845",
+          "#4d6764",
+          "#6e8986",
+          "#90aca9",
+          "#b3d0cd",
+          "#d8f6f2"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Tide Rule",
+        "canonical": "#c5d6d3",
+        "dark": "#284852",
+        "tonalRamp": [
+          "#030e0c",
+          "#1b2826",
+          "#374543",
+          "#566562",
+          "#768683",
+          "#99a9a6",
+          "#bccdca",
+          "#e1f3f0"
+        ]
+      },
+      "select": {
+        "role": "secondary",
+        "displayName": "Morning Light",
+        "canonical": "#fbe8bf",
+        "dark": "#3a3a24",
+        "tonalRamp": [
+          "#130900",
+          "#312200",
+          "#4f401b",
+          "#705f3a",
+          "#92805b",
+          "#b5a37c",
+          "#dac79f",
+          "#ffedc6"
+        ]
+      },
+      "error": {
+        "role": "neutral",
+        "displayName": "Ember Error",
+        "canonical": "#9b2d20",
+        "dark": "#f0a091",
+        "tonalRamp": [
+          "#230000",
+          "#4d0000",
+          "#7e0b02",
+          "#a53628",
+          "#cc5a4a",
+          "#f37e6b",
+          "#feb4a7",
+          "#ffe9e5"
+        ]
+      },
+      "on-error": {
+        "role": "neutral",
+        "displayName": "On Error",
+        "canonical": "#ffffff",
+        "dark": "#13252a",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "focus": {
+        "role": "neutral",
+        "displayName": "Focus (Deep Water / Moon Gold)",
+        "canonical": "#0e3640",
+        "dark": "#f2c25c",
+        "tonalRamp": [
+          "#000e15",
+          "#012a34",
+          "#224852",
+          "#426873",
+          "#628a95",
+          "#84adb9",
+          "#a8d1dd",
+          "#d5f5ff"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Welcome headline only; uppercase."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "One screen title per screen; uppercase, title color."
+      },
+      "question": {
+        "displayName": "Question",
+        "purpose": "Onboarding questions and the acknowledgment's first line; sentence case."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Heading of a flat field such as This week; uppercase."
+      },
+      "heading": {
+        "displayName": "Heading",
+        "purpose": "Section and fold headings in the reading face."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "Muted sentence under a screen title, max 36rem."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "All reading; 17px root, column max 40rem."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Names a group of choices or a footer group; never decoration above a title."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "ease-calm",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "The only easing: settles without bounce."
+      },
+      {
+        "name": "row-fill",
+        "value": "400ms",
+        "purpose": "Hover and selection fills on choice rows and start paths."
+      },
+      {
+        "name": "fold",
+        "value": "500ms",
+        "purpose": "Fold chevron rotation."
+      },
+      {
+        "name": "week-done",
+        "value": "600ms",
+        "purpose": "Week item settling when checked."
+      },
+      {
+        "name": "sun-rise",
+        "value": "1600ms",
+        "purpose": "Sun rise and glint fade in the horizon band; collapses under reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "tabs-grid",
+        "value": "max-width: 559px",
+        "purpose": "Tabs become a 2 by 2 grid."
+      },
+      {
+        "name": "wide",
+        "value": "min-width: 720px",
+        "purpose": "Horizon grows to 128px with a larger centered sun; page top padding 40px."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The way forward: one per decision, sun gold.",
+      "html": "<button class=\"ds-btn-primary\">Next</button>",
+      "css": ".ds-btn-primary { font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif; font-size: 17px; font-weight: 700; min-height: 48px; padding: 10px 18px; border-radius: 2px; border: 1.5px solid var(--sun, #efb84a); background: var(--sun, #efb84a); color: var(--on-sun, #13252a); cursor: pointer; } .ds-btn-primary:hover { filter: brightness(1.05); } .ds-btn-primary:focus-visible { outline: 3px solid var(--focus, #0e3640); outline-offset: 2px; }"
+    },
+    {
+      "name": "Quiet Button",
+      "kind": "button",
+      "refersTo": "button-quiet",
+      "description": "Secondary actions on the sky: edge border, ink text.",
+      "html": "<button class=\"ds-btn-quiet\">Talk to a person</button>",
+      "css": ".ds-btn-quiet { font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif; font-size: 17px; min-height: 48px; padding: 10px 18px; border-radius: 2px; border: 1.5px solid var(--edge, #6c8784); background: transparent; color: var(--ink, #13252a); cursor: pointer; } .ds-btn-quiet:hover { background: var(--raised, #f6faf9); } .ds-btn-quiet:focus-visible { outline: 3px solid var(--focus, #0e3640); outline-offset: 2px; }"
+    },
+    {
+      "name": "Link Button",
+      "kind": "button",
+      "refersTo": "button-link",
+      "description": "Back, Copy, footer actions: underlined accent text with a 44px floor.",
+      "html": "<button class=\"ds-btn-link\">Back</button>",
+      "css": ".ds-btn-link { font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif; font-size: 17px; min-height: 44px; padding: 4px 6px; border: 0; background: none; color: var(--accent, #144a56); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; } .ds-btn-link:hover { color: var(--ink, #13252a); } .ds-btn-link:focus-visible { outline: 3px solid var(--focus, #0e3640); outline-offset: 2px; }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Raised fill, 1.5px reed edge, hard 2px corner, label above.",
+      "html": "<label class=\"ds-field\"><span>What did you do?</span><input class=\"ds-input\" placeholder=\"In your own words\" /></label>",
+      "css": ".ds-field { display: grid; gap: 6px; font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif; color: var(--ink, #13252a); } .ds-field > span { font-weight: 700; } .ds-input { font: inherit; font-size: 1.0625rem; padding: 12px 14px; border-radius: 2px; border: 1.5px solid var(--edge, #6c8784); background: var(--raised, #f6faf9); color: var(--ink, #13252a); } .ds-input::placeholder { color: var(--muted, #43585d); opacity: 1; } .ds-input:focus-visible { outline: 3px solid var(--focus, #0e3640); outline-offset: 2px; }"
+    },
+    {
+      "name": "Choice Rows",
+      "kind": "custom",
+      "refersTo": "choice",
+      "description": "Quiet rows on the sky separated by rules, never boxed; at most four per group.",
+      "html": "<div class=\"ds-choices\"><p class=\"ds-group-label\">Money</p><label class=\"ds-choice ds-selected\"><input type=\"radio\" name=\"r\" checked /><span><span class=\"ds-cl\">A few weeks</span><span class=\"ds-ch\">Less than a month of runway</span></span></label><label class=\"ds-choice\"><input type=\"radio\" name=\"r\" /><span><span class=\"ds-cl\">A few months</span></span></label></div>",
+      "css": ".ds-choices { font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif; color: var(--ink, #13252a); } .ds-group-label { font-family: 'Big Shoulders', 'Arial Narrow', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.9rem; color: var(--muted, #43585d); margin: 0; padding: 0 0 6px; border-bottom: 1px solid var(--rule, #c5d6d3); } .ds-choice { display: flex; gap: 14px; align-items: flex-start; min-height: 56px; padding: 15px 12px; border-bottom: 1px solid var(--rule, #c5d6d3); cursor: pointer; transition: background-color 400ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-choice input { width: 20px; height: 20px; margin: 3px 0 0; accent-color: var(--accent, #144a56); } .ds-choice:hover { background: var(--raised, #f6faf9); } .ds-choice.ds-selected { background: var(--select, #fbe8bf); } .ds-choice:has(input:focus-visible) { outline: 3px solid var(--focus, #0e3640); outline-offset: -3px; } .ds-cl { display: block; font-weight: 600; } .ds-ch { display: block; color: var(--muted, #43585d); font-size: 0.95rem; margin-top: 2px; }"
+    },
+    {
+      "name": "Tabs",
+      "kind": "nav",
+      "refersTo": "tab",
+      "description": "Text tabs under the horizon with an inset accent underline when active.",
+      "html": "<nav class=\"ds-tabs\"><button class=\"ds-tab ds-active\">Steady ground</button><button class=\"ds-tab\">Where you are</button><button class=\"ds-tab\">What matters</button><button class=\"ds-tab\">Your mission</button></nav>",
+      "css": ".ds-tabs { display: flex; gap: 20px; border-bottom: 1px solid var(--rule, #c5d6d3); background: var(--sky, #e7f0ee); padding: 0 16px; font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif; } .ds-tab { font: inherit; min-height: 48px; padding: 12px 2px; border: 0; border-radius: 0; background: none; color: var(--muted, #43585d); font-weight: 600; cursor: pointer; } .ds-tab:hover { color: var(--ink, #13252a); } .ds-tab.ds-active { color: var(--ink, #13252a); box-shadow: inset 0 -3px 0 var(--accent, #144a56); } .ds-tab:focus-visible { outline: 3px solid var(--focus, #0e3640); outline-offset: 2px; }"
+    },
+    {
+      "name": "Horizon Band",
+      "kind": "custom",
+      "refersTo": "horizon",
+      "description": "Signature header: flat layers of sky, haze, sun, ridges and water; the sun's height is progress.",
+      "html": "<div class=\"ds-horizon\"><svg viewBox=\"0 0 1200 104\" preserveAspectRatio=\"xMidYMax slice\" aria-hidden=\"true\"><rect width=\"1200\" height=\"104\" fill=\"var(--band-sky, #d9e8e5)\"/><rect y=\"50\" width=\"1200\" height=\"28\" fill=\"var(--haze, #f1d6b4)\"/><circle class=\"ds-sun\" cx=\"600\" cy=\"60\" r=\"52\" fill=\"var(--sun, #efb84a)\"/><path fill=\"var(--ridge-far, #a9c4bd)\" d=\"M0 70 L120 58 L260 66 L380 54 L520 64 L700 56 L860 66 L1000 55 L1200 63 V80 H0 Z\"/><path fill=\"var(--ridge-near, #6f9a92)\" d=\"M0 78 L160 70 L330 76 L470 69 L640 76 L820 70 L980 77 L1200 71 V82 H0 Z\"/><rect y=\"80\" width=\"1200\" height=\"24\" fill=\"var(--water, #144a56)\"/><rect x=\"562\" y=\"86\" width=\"76\" height=\"3\" fill=\"var(--glint, #f6d58e)\"/><rect x=\"578\" y=\"93\" width=\"44\" height=\"3\" fill=\"var(--glint, #f6d58e)\"/><rect x=\"592\" y=\"99\" width=\"16\" height=\"2\" fill=\"var(--glint, #f6d58e)\"/></svg><span class=\"ds-brand\">Keel</span></div>",
+      "css": ".ds-horizon { position: relative; height: 128px; overflow: hidden; } .ds-horizon svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; } .ds-sun { transition: transform 1600ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-horizon:hover .ds-sun { transform: translateY(12px); } .ds-brand { position: relative; display: inline-block; padding: 8px 16px; font-family: 'Big Shoulders', 'Arial Narrow', sans-serif; font-weight: 700; font-size: 1.75rem; line-height: 1; letter-spacing: 0.04em; text-transform: uppercase; color: var(--title, #144a56); }"
+    },
+    {
+      "name": "Water Bar",
+      "kind": "custom",
+      "refersTo": "waterbar",
+      "description": "Onboarding actions below the waterline, with text progress.",
+      "html": "<div class=\"ds-waterbar\"><button class=\"ds-wb-link\">Back</button><span class=\"ds-wb-count\">3 of 9</span><span style=\"flex:1\"></span><button class=\"ds-wb-quiet\">Skip</button><button class=\"ds-wb-primary\">Next</button></div>",
+      "css": ".ds-waterbar { display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: var(--water, #144a56); color: var(--on-water, #eef6f5); font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif; } .ds-wb-count { color: var(--on-water-muted, #bcd5d3); font-size: 0.95rem; } .ds-waterbar button { font: inherit; min-height: 48px; padding: 10px 18px; border-radius: 2px; cursor: pointer; } .ds-wb-link { border: 0; background: none; min-height: 44px; padding: 4px 6px; color: var(--on-water, #eef6f5); text-decoration: underline; text-underline-offset: 3px; } .ds-wb-quiet { border: 1.5px solid var(--on-water-muted, #bcd5d3); background: transparent; color: var(--on-water, #eef6f5); } .ds-wb-quiet:hover { background: var(--water-deep, #0e3640); } .ds-wb-primary { border: 1.5px solid var(--sun, #efb84a); background: var(--sun, #efb84a); color: var(--on-sun, #13252a); font-weight: 700; } .ds-wb-primary:hover { filter: brightness(1.05); } .ds-waterbar button:focus-visible { outline: 3px solid var(--sun, #efb84a); outline-offset: 2px; }"
+    },
+    {
+      "name": "This Week Field",
+      "kind": "card",
+      "refersTo": "field-haze",
+      "description": "A flat haze field with numbered disc counters; discs turn sun gold when done. Not a card: no corner, border or shadow.",
+      "html": "<section class=\"ds-week\"><h2>This week</h2><ol><li><span class=\"ds-disc ds-done\">1</span><span>File for unemployment</span></li><li><span class=\"ds-disc\">2</span><span>Check health coverage</span></li></ol></section>",
+      "css": ".ds-week { background: var(--haze, #f1d6b4); padding: 20px 18px 8px; font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif; color: var(--ink, #13252a); } .ds-week h2 { font-family: 'Big Shoulders', 'Arial Narrow', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; font-size: 1.45rem; line-height: 1.05; color: var(--title, #144a56); margin: 0 0 6px; } .ds-week ol { list-style: none; padding: 0; margin: 0; } .ds-week li { display: flex; gap: 12px; align-items: center; padding: 14px 0; border-top: 1px solid color-mix(in srgb, var(--ink, #13252a) 18%, transparent); } .ds-week li:first-child { border-top: 0; } .ds-disc { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-family: 'Big Shoulders', 'Arial Narrow', sans-serif; font-weight: 700; font-size: 1.1rem; background: var(--water, #144a56); color: var(--on-water, #eef6f5); transition: background-color 600ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-disc.ds-done { background: var(--sun, #efb84a); color: var(--on-sun, #13252a); }"
+    },
+    {
+      "name": "Tag",
+      "kind": "chip",
+      "refersTo": "tag",
+      "description": "Small inline marker in morning light.",
+      "html": "<span class=\"ds-tag\">flexible</span>",
+      "css": ".ds-tag { display: inline-block; font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif; font-size: 0.8rem; font-weight: 700; padding: 1px 8px; border-radius: 2px; background: var(--select, #fbe8bf); color: var(--ink, #13252a); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Works Program Poster, under one word: peace",
+    "overview": "Keel is drawn the way the 1930s public works posters were printed: flat silkscreen layers, each one a single ink, stacked into a dawn over still water. A pale sky ground carries the reading; an apricot haze, a gold sun, two sage ridges and a deep teal lake make up the horizon band at the top of every screen; and the same lake comes back at the bottom, where the actions and the footer sit. The visitor reads in the sky and acts in the water. The governing feeling is peace: unhurried, one thing per screen, help always one tap away.\n\nThe system is plain and civic rather than soft. It refuses the calm-wellness default (cream ground, rounded white cards, soft serif) and the clinical portal. Density is low: a single 40rem column, generous rows, large tap targets, large type for questions. Depth comes from stacked flat color, never from shadow or gradient. Night is the same lake with the sun turned to a low gold moon, not an inverted palette.\n\nSignage type does the talking in short bursts (Big Shoulders); everything a person must read is set in a face built for low vision (Atkinson Hyperlegible Next). Motion is slow and settles: the sun rises with progress through onboarding over 1.6 seconds and simply stands still under reduced motion.",
+    "keyCharacteristics": [
+      "Flat silkscreen color fields; no gradients, textures, or soft cards.",
+      "A horizon band header (sky, haze, sun, ridges, water) on every screen; the sun's height carries progress.",
+      "Actions live below the waterline: the fixed water bar in onboarding, the closing lake band on content screens, the lake footer.",
+      "Hard 2px corners on controls; the only round forms are discs (sun, counters, ranks).",
+      "Big Shoulders for short display, Atkinson Hyperlegible Next for all reading, 17px body.",
+      "One calm ease for everything; nothing bounces."
+    ],
+    "rules": [
+      {
+        "name": "The Sun Is the Way Forward Rule",
+        "body": "Marigold fills only the primary action, the sun, and completed or ranked discs. In light mode it is never text on sky; one sun-gold button per decision.",
+        "section": "colors"
+      },
+      {
+        "name": "The Flat Ink Rule",
+        "body": "Every surface is one flat color from the palette. No gradients, no textures, no translucent overlays; layering is done by stacking fields.",
+        "section": "colors"
+      },
+      {
+        "name": "The Night Lake Rule",
+        "body": "Dark mode is the same scene at night, not an inversion: ground goes to deep teal (#0f252c), the sun becomes moon gold, titles turn gold (9.57:1 on night sky), links turn pale teal (#8fd0cf).",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Voices Rule",
+        "body": "Big Shoulders sets only short display text: titles, questions, path names, numerals in discs, group labels. Anything longer than a sentence, any instruction, every control label is Atkinson.",
+        "section": "typography"
+      },
+      {
+        "name": "The Label Names a Group Rule",
+        "body": "The uppercase label exists to name a set of controls beneath it. It never sits above a title as decoration.",
+        "section": "typography"
+      },
+      {
+        "name": "The Waterline Rule",
+        "body": "Depth is position in the landscape, not shadow. Nothing on the sky casts a shadow.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Hard Edge Rule",
+        "body": "No rectangle rounds beyond 2px. If it is round, it is a sun-like disc.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** put every screen's actions in the water: the water bar in onboarding, the closing lake band elsewhere.",
+      "**Do** keep one sun-gold primary per decision; give everything else the quiet or link treatment.",
+      "**Do** separate rows with 1px rules on the sky and use flat haze or band-sky fields for grouped content.",
+      "**Do** set questions in Big Shoulders sentence case at the question size, with at most four options per group.",
+      "**Do** keep targets at 48px for buttons and never under 44px for any control.",
+      "**Do** animate with the calm ease (cubic-bezier(0.16, 1, 0.3, 1)) at 400ms to 1600ms, and let reduced motion stop it.",
+      "**Do** keep form borders at 3:1 or better against their fill (Reed Edge on raised: 3.67:1)."
+    ],
+    "donts": [
+      "**Don't** use a cream ground, rounded white cards, or a soft serif; that is the wellness default Keel refuses.",
+      "**Don't** use gradients, textures, or shadows on anything that sits on the sky.",
+      "**Don't** round a rectangle beyond 2px; circles are reserved for discs.",
+      "**Don't** set paragraphs, instructions, or control labels in Big Shoulders.",
+      "**Don't** put an uppercase label above a title as decoration.",
+      "**Don't** use ridge colors for text or controls, or sun gold for text on the light sky.",
+      "**Don't** put white text on the night error color; it uses dark ink."
+    ]
+  }
+}

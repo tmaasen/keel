@@ -1,0 +1,62 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/canon.html"
+        ],
+        "createdAt": "2026-10-17T13:49:10.509Z",
+        "reason": "Intentional: canon card depicts the generic category standard on purpose (direction round, 2026-10-17)"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/canon.html"
+        ],
+        "createdAt": "2026-10-17T13:49:10.547Z",
+        "reason": "Intentional: canon card depicts the generic category standard on purpose (direction round, 2026-10-17)"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-10-17T14:32:26.152Z",
+        "reason": "Direction-round decision sketch (2026-10-17), not shipping code; predates DESIGN.md by design"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-transit.html"
+        ],
+        "createdAt": "2026-10-17T14:32:26.194Z",
+        "reason": "Direction-round decision sketch (2026-10-17), not shipping code; predates DESIGN.md by design"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/canon.html"
+        ],
+        "createdAt": "2026-10-17T14:32:26.235Z",
+        "reason": "Direction-round decision sketch (2026-10-17), not shipping code; predates DESIGN.md by design"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-10-17T14:32:26.279Z",
+        "reason": "Direction-round decision sketch (2026-10-17), not shipping code; predates DESIGN.md by design"
+      }
+    ]
+  }
+}

@@ -34,7 +34,7 @@ export function Declare({ profile }: { profile: Doc<"profiles"> | null }) {
 
   return (
     <section>
-      <h2 className="stage-question">{justAJob ? "How do you want to live?" : "What is your work for?"}</h2>
+      <h1 className="screen-title">{justAJob ? "How do you want to live?" : "What is your work for?"}</h1>
       <p className="helper">
         {justAJob
           ? "A personal mission statement can be about your whole life, not just work. A sentence or two about what matters and how you want to show up."
@@ -70,7 +70,7 @@ export function Declare({ profile }: { profile: Doc<"profiles"> | null }) {
 
       {missions && missions.length > 0 && (
         <>
-          <h3>Your versions</h3>
+          <h2>Your versions</h2>
           <ul className="missions">
             {missions.map((m) => (
               <li key={m._id} className={m.status === "accepted" ? "mission accepted" : "mission"}>
