@@ -3,7 +3,17 @@ import { api } from "../../convex/_generated/api";
 import type { Doc } from "../../convex/_generated/dataModel";
 import { sessionId } from "../session";
 import { Prompts } from "../components/Prompts";
-import { CONSTRAINTS, FIRST_NEED, ORIENTATION, RUNWAY, SITUATION, labelFor } from "../content/onboarding";
+import {
+  CLIENT_CHANGE,
+  CONSTRAINTS,
+  FIRST_NEED,
+  ORIENTATION,
+  RUNWAY,
+  SEVERANCE,
+  SITUATION,
+  WORRY_REASON,
+  labelFor,
+} from "../content/onboarding";
 import type { View } from "../App";
 
 /** Stage 1: Ground. A summary of onboarding, the AI setting, and optional reflection. */
@@ -14,6 +24,12 @@ export function Ground({ profile, goTo }: { profile: Doc<"profiles"> | null; goT
 
   const rows: [string, string | undefined][] = [
     ["What happened", labelFor(SITUATION, p?.aiImpact)],
+    ...(p?.aiImpact === "lost_job" ? [["Severance", labelFor(SEVERANCE, p?.severance)] as [string, string | undefined]] : []),
+    ...(p?.aiImpact === "drying_up"
+      ? [["With your clients", p?.clientChange?.map((c) => labelFor(CLIENT_CHANGE, c)).join("; ") || undefined] as [string, string | undefined]]
+      : []),
+    ...(p?.aiImpact === "job_changing" ? [["What you miss most", p?.missMost || undefined] as [string, string | undefined]] : []),
+    ...(p?.aiImpact === "worried" ? [["What's behind the worry", labelFor(WORRY_REASON, p?.worryReason)] as [string, string | undefined]] : []),
     ["Runway", labelFor(RUNWAY, p?.runway)],
     ["Most needed right now", labelFor(FIRST_NEED, p?.firstNeed)],
     ["Your work", [p?.work?.role, p?.work?.yearsBand].filter(Boolean).join(", ") || undefined],

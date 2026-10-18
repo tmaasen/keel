@@ -55,6 +55,25 @@ export function acknowledgment(profile: Partial<Doc<"profiles">>, feelings: Feel
     );
   }
 
+  // Situation follow-ups (each only counts for its own situation).
+  const miss = profile.aiImpact === "job_changing" ? profile.missMost?.trim().replace(/[.\s]+$/, "") : undefined;
+  if (miss) {
+    const short = miss.length > 140 ? `${miss.slice(0, 137).trimEnd()}…` : miss;
+    lines.push(`You told us you miss this: "${short}." That part of you didn't go anywhere, and it's worth finding room for again.`);
+  }
+  if (profile.aiImpact === "drying_up" && profile.clientChange?.includes("editing_ai")) {
+    lines.push("Being asked to polish a machine's draft of the work you used to do is its own kind of hurt.");
+  }
+  if (profile.aiImpact === "worried") {
+    if (profile.worryReason === "layoffs") lines.push("If layoffs have been announced, getting ready now is wise, not paranoid.");
+    if (profile.worryReason === "ai_push") {
+      lines.push("Being asked to use AI at work while wondering whether it will replace you is a hard place to stand.");
+    }
+    if (profile.worryReason === "news") {
+      lines.push("If most of the worry comes from the news, it's okay to step back from it. Much of what's said is guesswork.");
+    }
+  }
+
   if (feelings.includes("angry")) {
     lines.push("If you're angry, that makes sense. A lot of this came from decisions people made, not from anything you did.");
   }

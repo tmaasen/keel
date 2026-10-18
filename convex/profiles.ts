@@ -27,6 +27,7 @@ export const upsert = mutation({
       ...fields,
       displayName: clean(fields.displayName),
       valuedBy: clean(fields.valuedBy),
+      missMost: clean(fields.missMost),
       work: fields.work && { role: clean(fields.work.role), yearsBand: clean(fields.work.yearsBand) },
     };
     // Don't overwrite stored values with "undefined" from fields that weren't sent.

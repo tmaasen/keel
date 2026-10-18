@@ -21,6 +21,30 @@ export const AI_ROLE = [
   { id: "trained_it", label: "I was asked to use or train the AI tools", group: "Also" },
 ] as const;
 
+/** Laid off only. */
+export const SEVERANCE = [
+  { id: "deadline", label: "Yes, and there's a deadline to sign" },
+  { id: "offered", label: "Yes, with no deadline yet" },
+  { id: "none", label: "No severance" },
+  { id: "not_sure", label: "I'm not sure" },
+] as const;
+
+/** Work drying up only. */
+export const CLIENT_CHANGE = [
+  { id: "fewer", label: "Fewer clients or projects" },
+  { id: "paying_less", label: "Clients paying less for the same work" },
+  { id: "editing_ai", label: "Clients asking me to edit AI drafts instead" },
+  { id: "platforms", label: "Platforms showing my work less" },
+] as const;
+
+/** Worried only. */
+export const WORRY_REASON = [
+  { id: "layoffs", label: "Layoffs have been announced or are rumored" },
+  { id: "ai_push", label: "AI is being pushed into my work" },
+  { id: "news", label: "Mostly the news and what people are saying" },
+  { id: "other", label: "Something else" },
+] as const;
+
 export const RUNWAY = [
   { id: "under_1m", label: "Less than a month" },
   { id: "1_2m", label: "One to two months" },

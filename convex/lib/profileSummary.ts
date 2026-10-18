@@ -24,6 +24,22 @@ export function profileSummary(p: Doc<"profiles"> | null): string {
     not_sure: "They don't know for sure what caused it.",
   };
   for (const r of p.aiRole ?? []) parts.push(role[r]);
+  if (p.aiImpact === "lost_job" && p.severance === "deadline") parts.push("They have a severance offer with a deadline to sign.");
+  if (p.aiImpact === "drying_up" && p.clientChange?.length) {
+    const change: Record<string, string> = {
+      fewer: "fewer clients", paying_less: "clients paying less", editing_ai: "clients asking them to edit AI drafts",
+      platforms: "platforms showing their work less",
+    };
+    parts.push(`With their clients: ${p.clientChange.map((c) => change[c]).join(", ")}.`);
+  }
+  if (p.aiImpact === "job_changing" && p.missMost) parts.push(`What they miss most about their work, in their words: "${p.missMost}".`);
+  if (p.aiImpact === "worried" && p.worryReason) {
+    const why: Record<string, string> = {
+      layoffs: "Layoffs have been announced or rumored where they work.", ai_push: "AI is being pushed into their work.",
+      news: "The worry comes mostly from the news.", other: "",
+    };
+    if (why[p.worryReason]) parts.push(why[p.worryReason]);
+  }
   if (p.work?.role) parts.push(`Their work: ${p.work.role}${p.work.yearsBand ? ` (${p.work.yearsBand})` : ""}.`);
   if (p.identityTie === "who_i_was") parts.push("This work was a big part of who they were.");
   if (p.identityTie === "a_lot") parts.push("Much of who they are was tied to this work.");

@@ -9,6 +9,9 @@ import { acknowledgment } from "../content/acknowledgment";
 import {
   AI_CHOICE,
   AI_ROLE,
+  CLIENT_CHANGE,
+  SEVERANCE,
+  WORRY_REASON,
   CONSTRAINTS,
   FEELINGS,
   FIRST_NEED,
@@ -20,6 +23,7 @@ import {
   type FeelingId,
 } from "../content/onboarding";
 import type { View } from "../App";
+import { lostWork, shownQuestions, startPaths, stillWorking, workHit, type PathId } from "../logic/journey";
 
 type Profile = Doc<"profiles">;
 type Answers = Partial<Profile>;
@@ -30,6 +34,10 @@ const STEPS = [
   "name",
   "situation",
   "aiRole",
+  "severance",
+  "clientChange",
+  "missMost",
+  "worryReason",
   "runway",
   "firstNeed",
   "work",
@@ -43,7 +51,6 @@ const STEPS = [
 ] as const;
 type Step = (typeof STEPS)[number];
 const NOT_QUESTIONS: readonly Step[] = ["welcome", "acknowledge", "start"];
-const QUESTIONS = STEPS.filter((s) => !NOT_QUESTIONS.includes(s));
 
 /** Remember the step so a reload or app switch doesn't send someone back to the start. */
 const STEP_KEY = "keel.onboardingStep";
@@ -84,13 +91,13 @@ export function Onboarding({
   const firstRender = useRef(true);
   const step: Step = STEPS[i];
 
-  const wasHit = a.aiImpact === "lost_job" || a.aiImpact === "drying_up" || a.aiImpact === "job_changing";
+  const wasHit = workHit(a);
   const struggling = feelings.includes("struggling");
   const set = (patch: Answers) => setA((prev) => ({ ...prev, ...patch }));
   const save = (patch: ProfileInput) => upsert({ sessionId, ...patch });
 
-  // Questions shown to this person (the AI-role question only appears when their work was hit).
-  const shown = QUESTIONS.filter((s) => s !== "aiRole" || wasHit);
+  // Questions shown to this person depend on their answers (src/logic/journey.ts).
+  const shown: Step[] = shownQuestions(a);
   const questionNumber = shown.indexOf(step) + 1;
   const isQuestion = !NOT_QUESTIONS.includes(step);
 
@@ -117,6 +124,10 @@ export function Onboarding({
       case "name": return { displayName: a.displayName ?? "" };
       case "situation": return { aiImpact: a.aiImpact, ...(wasHit ? {} : { aiRole: [] }) };
       case "aiRole": return { aiRole: a.aiRole ?? [] };
+      case "severance": return { severance: a.severance };
+      case "clientChange": return { clientChange: a.clientChange ?? [] };
+      case "missMost": return { missMost: a.missMost ?? "" };
+      case "worryReason": return { worryReason: a.worryReason };
       case "runway": return { runway: a.runway };
       case "firstNeed": return { firstNeed: a.firstNeed };
       case "work": return { work: a.work, identityTie: a.identityTie };
@@ -132,7 +143,10 @@ export function Onboarding({
     setSaveError(null);
     setI((n) => {
       let to = Math.min(Math.max(n + delta, 0), STEPS.length - 1);
-      if (STEPS[to] === "aiRole" && !wasHit) to += delta;
+      // Skip any question this person's answers leave out.
+      while (!NOT_QUESTIONS.includes(STEPS[to]) && !shown.includes(STEPS[to]) && to > 0 && to < STEPS.length - 1) {
+        to += delta;
+      }
       writeStep(to);
       return to;
     });
@@ -162,7 +176,22 @@ export function Onboarding({
     go(1);
   };
 
-  const bridgeFirst = a.runway === "under_1m" || a.runway === "1_2m" || a.firstNeed === "income";
+  const pathCopy: Record<PathId, { title: string; text: string }> = {
+    support: {
+      title: "Talk to a person",
+      text: "Crisis lines, benefits help, financial counseling, and community. Keel is not a substitute for people.",
+    },
+    bridge: {
+      title: "Steady ground",
+      text: stillWorking(a)
+        ? "Quiet, practical preparation: a little breathing room, knowing your safety net, and the people who value your work."
+        : "Practical help for right now: benefits, health coverage, reaching back out to people who value your work, and bridge income.",
+    },
+    discover: {
+      title: "What matters to me",
+      text: "Reflect on your values and your life outside work, then write a personal mission statement in your own words.",
+    },
+  };
   const finish = async (view: View) => {
     try {
       await save({ onboardingCompletedAt: Date.now() });
@@ -217,7 +246,10 @@ export function Onboarding({
                   <strong>No predictions.</strong> Nobody knows where AI is headed, and Keel won't pretend to or sell
                   you an "AI-proof" career.
                 </li>
-                <li><strong>Your answers are private.</strong> Not sold, not shared with employers, deletable any time.</li>
+                <li>
+                  <strong>Your answers are private.</strong> Not sold, not shared with employers, deletable any time. For
+                  now, they're saved only in this browser.
+                </li>
                 <li>
                   <strong>AI is optional.</strong> If you turn it on, it only reflects your own words back and offers
                   drafts you can change. It never scores, ranks, or judges you.
@@ -261,6 +293,34 @@ export function Onboarding({
             </Question>
           )}
 
+          {step === "severance" && (
+            <Question heading={heading("Were you offered severance?")} why="If there's a deadline, we'll put what matters most for it first.">
+              <SingleChoice name="severance" options={SEVERANCE} value={a.severance} labelledBy="q-title"
+                onChange={(id) => set({ severance: id as Profile["severance"] })} />
+            </Question>
+          )}
+
+          {step === "clientChange" && (
+            <Question heading={heading("What's happened with your clients?")} why="Choose any that fit. We'll focus the freelance help on what actually changed.">
+              <MultiChoice options={CLIENT_CHANGE} value={a.clientChange ?? []} labelledBy="q-title"
+                onChange={(ids) => set({ clientChange: ids as Profile["clientChange"] })} />
+            </Question>
+          )}
+
+          {step === "missMost" && (
+            <Question heading={heading("Which parts of your work do you miss most?")} why="The parts that made it yours. They're worth finding room for again, at work or outside it.">
+              <textarea rows={3} value={a.missMost ?? ""} onChange={(e) => set({ missMost: e.target.value })}
+                aria-labelledby="q-title" placeholder="For example: solving the hard cases myself, writing in my own voice" />
+            </Question>
+          )}
+
+          {step === "worryReason" && (
+            <Question heading={heading("What's making you worried?")} why="So we can match how urgent this is, not add to it.">
+              <SingleChoice name="worryReason" options={WORRY_REASON} value={a.worryReason} labelledBy="q-title"
+                onChange={(id) => set({ worryReason: id as Profile["worryReason"] })} />
+            </Question>
+          )}
+
           {step === "runway" && (
             <Question
               heading={heading("If no new income came in, how long could you cover essentials like rent, food, and bills?")}
@@ -295,7 +355,9 @@ export function Onboarding({
                   {YEARS.map((y) => <option key={y} value={y}>{y}</option>)}
                 </select>
               </label>
-              <p className="field-label" id="identity-q">How much of who you are was tied to this work?</p>
+              <p className="field-label" id="identity-q">
+                {lostWork(a) ? "How much of who you are was tied to this work?" : "How much of who you are is tied to your work?"}
+              </p>
               <SingleChoice name="identity" options={IDENTITY_TIE} value={a.identityTie} labelledBy="identity-q"
                 onChange={(id) => set({ identityTie: id as Profile["identityTie"] })} />
             </Question>
@@ -384,22 +446,10 @@ export function Onboarding({
                 </p>
               )}
               <ul className="paths">
-                {struggling && (
-                  <PathRow recommended title="Talk to a person"
-                    text="Crisis lines, benefits help, financial counseling, and community. Keel is not a substitute for people."
-                    onClick={() => finish("support")} />
-                )}
-                <PathRow recommended={bridgeFirst && !struggling} title="Steady ground"
-                  text="Practical help for right now: benefits, health coverage, reaching back out to people who value your work, and bridge income."
-                  onClick={() => finish("bridge")} />
-                <PathRow recommended={!bridgeFirst && !struggling} title="What matters to me"
-                  text="Reflect on your values and your life outside work, then write a personal mission statement in your own words."
-                  onClick={() => finish("discover")} />
-                {!struggling && (
-                  <PathRow title="Talk to a person"
-                    text="Crisis lines, benefits help, financial counseling, and community. Keel is not a substitute for people."
-                    onClick={() => finish("support")} />
-                )}
+                {startPaths(a, feelings).map((p) => (
+                  <PathRow key={p.id} recommended={p.recommended} title={pathCopy[p.id].title}
+                    text={pathCopy[p.id].text} onClick={() => finish(p.id)} />
+                ))}
               </ul>
               <p className="helper">You can switch between these any time.</p>
               {saveError && <p className="error" role="alert">{saveError}</p>}

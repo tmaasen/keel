@@ -29,6 +29,26 @@ export const aiRole = v.union(
   v.literal("not_sure"),
 );
 
+/** Situation-specific follow-ups: each is asked of one situation only (src/logic/journey.ts). */
+export const severance = v.union(
+  v.literal("deadline"), // offered, with a deadline to sign
+  v.literal("offered"), // offered, no deadline
+  v.literal("none"),
+  v.literal("not_sure"),
+);
+export const clientChange = v.union(
+  v.literal("fewer"),
+  v.literal("paying_less"),
+  v.literal("editing_ai"),
+  v.literal("platforms"),
+);
+export const worryReason = v.union(
+  v.literal("layoffs"),
+  v.literal("ai_push"),
+  v.literal("news"),
+  v.literal("other"),
+);
+
 export const runway = v.union(
   v.literal("under_1m"),
   v.literal("1_2m"),
@@ -81,6 +101,10 @@ export const profileFields = {
   displayName: v.optional(v.string()),
   aiImpact: v.optional(aiImpact),
   aiRole: v.optional(v.array(aiRole)),
+  severance: v.optional(severance), // laid off only
+  clientChange: v.optional(v.array(clientChange)), // work drying up only
+  missMost: v.optional(v.string()), // job changing only: in their words
+  worryReason: v.optional(worryReason), // worried only
   runway: v.optional(runway),
   firstNeed: v.optional(firstNeed),
   work: v.optional(

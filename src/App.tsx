@@ -136,7 +136,7 @@ export default function App() {
 function TesterStrip({ onFeedback }: { onFeedback: () => void }) {
   return (
     <div className="tester-strip">
-      <span>Test version. Saved in this browser.</span>
+      <span>Keel is in testing.</span>
       <button className="link" onClick={onFeedback}>Share feedback</button>
     </div>
   );

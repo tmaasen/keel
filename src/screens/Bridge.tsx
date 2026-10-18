@@ -5,6 +5,90 @@ import type { Doc } from "../../convex/_generated/dataModel";
 import type { View } from "../App";
 import { sessionId } from "../session";
 import { TranslateWork } from "../components/TranslateWork";
+import { bridgePlan, type FreelanceItem, type PrepareItem, type ProtectItem } from "../logic/journey";
+
+const PROTECT: Record<ProtectItem, { title: string; body: React.ReactNode }> = {
+  unemployment: {
+    title: "Apply for unemployment now.",
+    body: (
+      <>
+        Don't wait until savings run out; start dates and rules vary by state.{" "}
+        <a href="https://www.usa.gov/unemployment-benefits" target="_blank" rel="noreferrer">Find your state's office</a>.
+      </>
+    ),
+  },
+  health: {
+    title: "Keep health coverage.",
+    body: (
+      <>
+        Losing job-based coverage usually opens a 60-day window on{" "}
+        <a href="https://www.healthcare.gov/coverage-outside-open-enrollment/special-enrollment-period/" target="_blank" rel="noreferrer">HealthCare.gov</a>.
+        COBRA is another option, but often costs more.
+      </>
+    ),
+  },
+  severance: {
+    title: "Don't rush a severance agreement.",
+    body: (
+      <>
+        You can usually ask for time to review it, and it's worth having someone look it over.{" "}
+        <a href="https://www.lawhelp.org" target="_blank" rel="noreferrer">Free legal help</a>.
+      </>
+    ),
+  },
+  "211": {
+    title: "Call 211 for local help with rent, food, and utilities.",
+    body: (
+      <>
+        Telling landlords and lenders early often opens hardship options.{" "}
+        <a href="https://www.211.org" target="_blank" rel="noreferrer">211.org</a>
+      </>
+    ),
+  },
+};
+
+const SEVERANCE_DEADLINE = {
+  title: "Before your severance deadline, slow down.",
+  body: (
+    <>
+      You can usually ask for more time to review it, and some terms can be negotiated. Have someone look it over
+      before you sign; signing often means giving up the right to bring claims later.{" "}
+      <a href="https://www.lawhelp.org" target="_blank" rel="noreferrer">Free legal help</a>.
+    </>
+  ),
+};
+
+const PREPARE: Record<PrepareItem, { title: string; body: React.ReactNode }> = {
+  buffer: {
+    title: "Make a little breathing room.",
+    body: "Write down what your essentials cost each month, and set aside what you can, even a small amount. Knowing the number takes some of the fear out of it.",
+  },
+  record: {
+    title: "Keep a copy of your own record.",
+    body: "Save your reviews, thank-you notes, and results somewhere personal. Only your own record, never your employer's confidential material.",
+  },
+  net: {
+    title: "Learn your safety net before you need it.",
+    body: (
+      <>
+        Look up how unemployment works in your state, and what happens to your health coverage if your job ends.{" "}
+        <a href="https://www.usa.gov/unemployment-benefits" target="_blank" rel="noreferrer">Unemployment by state</a>.
+      </>
+    ),
+  },
+  reconnect: {
+    title: "Reconnect while nothing is urgent.",
+    body: "Send one friendly message to a former coworker or client. It's much easier now than later.",
+  },
+};
+
+const FREELANCE: Record<FreelanceItem, React.ReactNode> = {
+  pricing: <><strong>Price for the work, not the platform.</strong> Direct clients often pay more than platform rates. If rates are sliding, say what your judgment adds before you agree to less.</>,
+  editing: <><strong>If clients want you to edit AI drafts,</strong> price it as editing, not as a discount on your craft, and name what you fix that the draft gets wrong.</>,
+  past_clients: <><strong>Go back to past clients first,</strong> by email, not through the platform. They already trust your work.</>,
+  niche: <><strong>Pick a niche you know</strong> and reach out to a few businesses in it directly, with a short example of what you'd do for them.</>,
+  portfolio: <><strong>Keep a simple portfolio</strong> you control. For creative work, it speaks louder than a résumé.</>,
+};
 
 /**
  * Bridge track: steady ground for people who need income soon.
@@ -14,16 +98,10 @@ import { TranslateWork } from "../components/TranslateWork";
  */
 export function Bridge({ profile, goTo }: { profile: Doc<"profiles"> | null; goTo: (v: View) => void }) {
   const upsert = useMutation(api.profiles.upsert);
-  const situation = profile?.aiImpact;
-  const freelancer = situation === "drying_up";
-  const lostWork = situation === "lost_job" || situation === "drying_up";
-  const shortOnMoney = profile?.runway === "under_1m" || profile?.runway === "1_2m";
-  // Unemployment, COBRA, and severance only make sense for people who lost income (or haven't told us).
-  const showProtect =
-    profile?.runway !== "has_income" && situation !== "job_changing" && (lostWork || shortOnMoney || !situation);
-  const role = profile?.work?.role?.trim();
-  const roleWork = role ? `${role} work` : "[the kind of work you do]";
-  const needsFlex = profile?.constraints?.some((c) => c === "flexible_hours" || c === "caregiver");
+  // What this person sees is decided in src/logic/journey.ts (covered by the persona tests).
+  const plan = bridgePlan(profile ?? {});
+  const { freelancer, roleWork, needsFlex } = plan;
+  const lostWork = plan.scripts === "lost";
 
   const [done, setDone] = useState<string[]>(profile?.bridgeDone ?? []);
   useEffect(() => setDone(profile?.bridgeDone ?? []), [profile?.bridgeDone]);
@@ -37,34 +115,45 @@ export function Bridge({ profile, goTo }: { profile: Doc<"profiles"> | null; goT
     <section className="bridge">
       <h1 className="screen-title">Steady ground</h1>
       <p className="lede">
-        Getting income and stability back isn't giving up on what matters to you. It's what makes the rest possible.
-        Take what's useful here and skip the rest.
+        {plan.thisWeek === "prepare"
+          ? plan.prepareTone === "urgent"
+            ? "If layoffs are coming, a few steps now can make a hard turn much easier. Take what's useful and skip the rest."
+            : "Nothing here is urgent. A few quiet steps now can make a hard turn easier, if it ever comes. Take what's useful and skip the rest."
+          : "Getting income and stability back isn't giving up on what matters to you. It's what makes the rest possible. Take what's useful here and skip the rest."}
       </p>
 
-      {showProtect && (
+      {plan.thisWeek === "prepare" && (
+        <section className="this-week" aria-labelledby="this-week-title">
+          <h2 id="this-week-title">
+            {plan.prepareTone === "gentle" ? "No rush: get ready, quietly" : "This week: get ready, quietly"}
+          </h2>
+          <ol className="week-list">
+            {plan.prepare.map((item) => {
+              const { title, body } = PREPARE[item];
+              return (
+                <WeekItem key={item} id={`prep-${item}`} done={done} onToggle={toggleDone} title={title}>{body}</WeekItem>
+              );
+            })}
+          </ol>
+        </section>
+      )}
+
+      {plan.thisWeek === "protect" && (
         <section className="this-week" aria-labelledby="this-week-title">
           <h2 id="this-week-title">This week: protect what you have</h2>
           <ol className="week-list">
-            <WeekItem id="unemployment" done={done} onToggle={toggleDone} title="Apply for unemployment now.">
-              Don't wait until savings run out; start dates and rules vary by state.{" "}
-              <a href="https://www.usa.gov/unemployment-benefits" target="_blank" rel="noreferrer">Find your state's office</a>.
-              {freelancer && (
-                <> If you were freelance or self-employed, you may not qualify for regular unemployment, but check with your state anyway.</>
-              )}
-            </WeekItem>
-            <WeekItem id="health" done={done} onToggle={toggleDone} title="Keep health coverage.">
-              Losing job-based coverage usually opens a 60-day window on{" "}
-              <a href="https://www.healthcare.gov/coverage-outside-open-enrollment/special-enrollment-period/" target="_blank" rel="noreferrer">HealthCare.gov</a>.
-              COBRA is another option, but often costs more.
-            </WeekItem>
-            <WeekItem id="severance" done={done} onToggle={toggleDone} title="Don't rush a severance agreement.">
-              You can usually ask for time to review it, and it's worth having someone look it over.{" "}
-              <a href="https://www.lawhelp.org" target="_blank" rel="noreferrer">Free legal help</a>.
-            </WeekItem>
-            <WeekItem id="211" done={done} onToggle={toggleDone} title="Call 211 for local help with rent, food, and utilities.">
-              Telling landlords and lenders early often opens hardship options.{" "}
-              <a href="https://www.211.org" target="_blank" rel="noreferrer">211.org</a>
-            </WeekItem>
+            {plan.protect.map((item) => {
+              const severanceDeadline = item === "severance" && profile?.aiImpact === "lost_job" && profile.severance === "deadline";
+              const { title, body } = severanceDeadline ? SEVERANCE_DEADLINE : PROTECT[item];
+              return (
+                <WeekItem key={item} id={item} done={done} onToggle={toggleDone} title={title}>
+                  {body}
+                  {item === "unemployment" && freelancer && (
+                    <> If you were freelance or self-employed, you may not qualify for regular unemployment, but check with your state anyway.</>
+                  )}
+                </WeekItem>
+              );
+            })}
           </ol>
         </section>
       )}
@@ -112,10 +201,7 @@ export function Bridge({ profile, goTo }: { profile: Doc<"profiles"> | null; goT
             was owning the relationship directly.
           </p>
           <ul className="rows">
-            <li><strong>Go back to past clients first,</strong> by email, not through the platform. They already trust your work.</li>
-            <li><strong>Pick a niche you know</strong> and reach out to a few businesses in it directly, with a short example of what you'd do for them.</li>
-            <li><strong>Keep a simple portfolio</strong> you control. For creative work, it speaks louder than a résumé.</li>
-            <li><strong>Price for the work, not the platform.</strong> Direct clients often pay more than platform rates.</li>
+            {plan.freelance.map((item) => <li key={item}>{FREELANCE[item]}</li>)}
           </ul>
         </Fold>
       )}

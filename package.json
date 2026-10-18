@@ -16,7 +16,8 @@
     "build": "tsc -b && vite build",
     "typecheck": "tsc --noEmit -p . && tsc --noEmit -p convex",
     "convex": "convex dev",
-    "deploy": "static-hosting deploy --build-command 'pnpm build'"
+    "deploy": "static-hosting deploy --build-command 'pnpm build'",
+    "test": "vitest run"
   },
   "dependencies": {
     "@convex-dev/static-hosting": "0.2.1",
@@ -30,6 +31,7 @@
     "@types/react-dom": "^19.1.0",
     "@vitejs/plugin-react": "^4.5.0",
     "typescript": "^5.8.0",
-    "vite": "^6.3.0"
+    "vite": "^6.3.0",
+    "vitest": "^3.2.7"
   }
 }
