@@ -57,3 +57,16 @@ export function toMarkdown(data: Export): string {
 
   return out.join("\n");
 }
+
+/** Save everything someone wrote as a file: readable Markdown or full JSON. */
+export function downloadExport(data: Export, format: "md" | "json") {
+  const blob =
+    format === "md"
+      ? new Blob([toMarkdown(data)], { type: "text/markdown" })
+      : new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `keel.${format}`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}

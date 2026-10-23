@@ -380,6 +380,16 @@ input[type="checkbox"], input[type="radio"] { width: 20px; height: 20px; accent-
 .mission { padding: 16px 18px; background: var(--band-sky); }
 .mission p { margin: 0 0 10px; font-size: var(--text-lede); line-height: 1.5; }
 .mission.accepted { background: var(--haze); }
+.mission-mine { background: var(--haze); padding: 18px 18px 6px; margin: 8px 0 28px; }
+.mission-mine h2 {
+  font-family: var(--font-display); font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;
+  font-size: var(--text-title-sm); color: var(--title); margin: 0 0 8px;
+}
+.mission-mine > p:first-of-type { font-size: var(--text-lede); line-height: 1.5; }
+.mission-next { padding-top: 28px; padding-bottom: 28px; margin-top: 56px; }
+.mission-next h2 { margin-top: 0; color: var(--on-water); }
+.mission-next p { color: var(--on-water); max-width: 36rem; }
+[role="status"].helper:empty { margin: 0; }
 .meta { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; align-items: center; color: var(--muted); font-size: var(--text-label); }
 .meta strong { color: var(--ink); }
 
