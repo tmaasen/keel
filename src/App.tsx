@@ -8,7 +8,7 @@ import { Bridge } from "./screens/Bridge";
 import { Discover } from "./screens/Discover";
 import { Declare } from "./screens/Declare";
 import { Support } from "./screens/Support";
-import { toMarkdown } from "./exportMarkdown";
+import { downloadExport } from "./exportMarkdown";
 import { Feedback } from "./components/Feedback";
 import { Horizon } from "./components/Horizon";
 
@@ -121,7 +121,7 @@ export default function App() {
             {view === "ground" && <Ground profile={profile} goTo={goTo} />}
             {view === "bridge" && <Bridge profile={profile} goTo={goTo} />}
             {view === "discover" && <Discover onNext={() => goTo("declare")} />}
-            {view === "declare" && <Declare profile={profile} />}
+            {view === "declare" && <Declare profile={profile} goTo={goTo} />}
             {view === "support" && <Support />}
           </main>
         )}
@@ -148,16 +148,7 @@ function Footer({ onboarding, onFeedback }: { onboarding: boolean; onFeedback: (
   const [confirmingDelete, setConfirmingDelete] = useState(false);
 
   const download = (format: "md" | "json") => {
-    if (!data) return;
-    const blob =
-      format === "md"
-        ? new Blob([toMarkdown(data)], { type: "text/markdown" })
-        : new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = `keel.${format}`;
-    a.click();
-    URL.revokeObjectURL(a.href);
+    if (data) downloadExport(data, format);
   };
 
   return (
