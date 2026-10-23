@@ -1,0 +1,38 @@
+# Every push, on any branch, deploys Keel to the dev Convex deployment: our sandbox for work in progress.
+# Testers use production, which only changes through the manual deploy-prod workflow.
+# Needs the CONVEX_DEPLOY_KEY_DEV secret (see docs/TESTING.md, "Automatic deploys").
+name: Deploy to dev
+
+on:
+  push:
+    branches: ["**"]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-dev
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: dev
+    env:
+      CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY_DEV }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm typecheck
+      - name: Persona tests
+        run: pnpm test
+
+      - name: Push backend to dev
+        run: pnpm exec convex dev --once
+      - name: Build and publish the site to dev
+        run: pnpm exec static-hosting upload --build --build-command 'pnpm build'

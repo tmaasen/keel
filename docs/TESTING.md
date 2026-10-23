@@ -43,6 +43,29 @@ pnpm run deploy
 This builds the web app against production, deploys the Convex backend, and uploads the site, in
 that order, so the two never drift apart. Old files are cleaned up automatically.
 
+**How we work: branches, dev, and production**
+
+- **Production is for testers.** It only changes when you run *Deploy to production* by hand, from `main`.
+- **Dev is the sandbox.** Every push on any branch deploys there (https://qualified-scorpion-293.convex.site), so it always shows the latest work in progress. Nobody outside the team uses it.
+- **`main` holds finished features only.** Build each feature on its own branch, merge it when it's done, then deploy to production when you're ready for testers to see it.
+
+**Automatic deploys (GitHub Actions)**
+
+- **Dev** (`.github/workflows/deploy-dev.yml`): every push, on any branch, typechecks, runs the persona tests, and deploys to dev.
+- **Production** (`.github/workflows/deploy-prod.yml`): only when you run it by hand (Actions → *Deploy to production* → *Run workflow*, then type `deploy`). It deploys whatever branch you pick, so pick `main`.
+- **Checks** (`.github/workflows/ci.yml`): every pull request is typechecked, tested, and built. No secrets, so it's safe for contributions from forks.
+
+One-time setup:
+
+1. Create two deploy keys, one per deployment:
+   ```bash
+   pnpm exec convex deployment token create github-dev                     # the dev deployment in .env.local
+   pnpm exec convex deployment token create github-prod --deployment prod  # production
+   ```
+   (Or in the Convex dashboard: each deployment's Settings → Deploy keys.)
+2. In GitHub: repository Settings → Environments. Create `dev` and `production`. Add the dev key to `dev` as the secret `CONVEX_DEPLOY_KEY_DEV`, and the production key to `production` as `CONVEX_DEPLOY_KEY_PROD`. In `production`, limit deployment branches to `main` and optionally require yourself as a reviewer.
+3. Push a branch and check the Actions tab.
+
 **Budget safety:** set `AI_MONTHLY_BUDGET_USD` and also a credit limit on your OpenRouter key before sharing the link. Keel's cap uses the cost OpenRouter reports for each call; the key limit is the backstop. If the key runs out, Keel shows the same resting message.
 
 ## 2. Check it yourself first

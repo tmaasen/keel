@@ -1,0 +1,39 @@
+# Deploys Keel to production. Run it by hand: Actions → "Deploy to production" → Run workflow.
+# Needs the CONVEX_DEPLOY_KEY_PROD secret in the "production" environment (see docs/TESTING.md, "Deploying").
+name: Deploy to production
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "deploy" to publish to production'
+        required: true
+
+concurrency:
+  group: deploy-prod
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: inputs.confirm == 'deploy'
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY_PROD }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm typecheck
+      - name: Persona tests
+        run: pnpm test
+
+      # Builds against production, deploys the backend, then uploads the site, in that order.
+      - name: Deploy backend and site to production
+        run: pnpm run deploy
